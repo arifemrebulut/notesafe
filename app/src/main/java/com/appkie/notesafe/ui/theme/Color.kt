@@ -2,7 +2,16 @@ package com.appkie.notesafe.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val Blue = Color(0xFF407BFF)
+val ErrorRed = Color(0xFFFF6C60)
+val InfoGreen = Color(0xFF00C096)
+
+val PastelBlue = Color(0xFFDCEAFF)
+val PastelGreen = Color(0xFFCBFFF2)
+val PastelPurple = Color(0xFFE0C8FF)
+val PastelYellow = Color(0xFFFFF6C8)
+val PastelBrown = Color(0xFFFFE6C8)
+
+val Black = Color(0xFF000000)
+val White = Color(0xFFFFFFFF)
+val Gray = Color(0xFFCCCCCC)
