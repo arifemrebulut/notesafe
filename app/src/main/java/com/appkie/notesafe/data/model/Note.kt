@@ -7,7 +7,7 @@ import com.appkie.notesafe.util.Consts.NOTE_TABLE
 @Entity(tableName = NOTE_TABLE)
 data class Note(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int? = null,
     val title: String,
     val description: String,
 )

@@ -7,7 +7,7 @@ import com.appkie.notesafe.util.Consts.TODO_TABLE
 @Entity(tableName = TODO_TABLE)
 data class Todo(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Int? = null,
     val title: String,
     val checked: Boolean
 )
