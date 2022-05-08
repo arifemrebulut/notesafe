@@ -18,4 +18,7 @@ interface NoteDao {
 
     @Delete
     suspend fun deleteNote(note: Note)
+
+    @Query("SELECT * FROM note_table WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
+    fun searchNote(searchQuery: String): Flow<List<Note>>
 }

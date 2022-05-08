@@ -19,4 +19,7 @@ interface TodoDao {
 
     @Delete
     suspend fun deleteTodo(todo: Todo)
+
+    @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery")
+    fun searchTodo(searchQuery: String): Flow<List<Todo>>
 }
