@@ -1,4 +1,4 @@
-package com.appkie.notesafe
+package com.appkie.notesafe.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

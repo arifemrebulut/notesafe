@@ -1,7 +1,6 @@
 package com.appkie.notesafe.data
 
 import androidx.room.*
-import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.model.Todo
 import kotlinx.coroutines.flow.Flow
 
