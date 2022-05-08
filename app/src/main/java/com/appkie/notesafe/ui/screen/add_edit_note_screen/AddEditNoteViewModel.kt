@@ -32,13 +32,22 @@ class AddEditNoteViewModel @Inject constructor(
     }
 
     private fun getNoteById() {
+        if (id != -1) {
+            viewModelScope.launch {
+                val note : Note? = noteRepository.getNoteById(id)
 
+                note?.let { note ->
+                    title = note.title
+                    description = note.description
+                }
+            }
+        }
     }
 
     fun saveNote() {
         viewModelScope.launch {
             val note = Note(
-                id = id,
+                id = if(id != -1) id else null,
                 title = title,
                 description = description
             )
