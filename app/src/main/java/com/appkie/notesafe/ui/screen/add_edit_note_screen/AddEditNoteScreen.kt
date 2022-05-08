@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
@@ -16,7 +17,7 @@ import com.appkie.notesafe.ui.navigation.Screen
 @Composable
 fun AddEditNoteScreen(
     navController: NavController,
-    addEditNoteViewModel: AddEditNoteViewModel
+    addEditNoteViewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
     val id = addEditNoteViewModel.id
     val titleState = addEditNoteViewModel.title
