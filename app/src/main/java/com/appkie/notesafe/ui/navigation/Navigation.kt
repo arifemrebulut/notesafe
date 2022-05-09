@@ -7,8 +7,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteScreen
-import com.appkie.notesafe.ui.screen.add_edit_todo_screen.AddEditTodoScreen
 import com.appkie.notesafe.ui.screen.home_screen.HomeScreen
+import com.appkie.notesafe.ui.screen.note_list_screen.NoteListScreen
+import com.appkie.notesafe.ui.screen.todo_list_screen.TodoListScreen
 
 @Composable
 fun Navigation(
@@ -16,10 +17,14 @@ fun Navigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.HomeScreen.route
+        startDestination = Screen.NoteListScreen.route
     ) {
-        composable(route = Screen.HomeScreen.route) {
-            HomeScreen(navController = navController)
+        composable(route = Screen.NoteListScreen.route) {
+            NoteListScreen(navController = navController)
+        }
+
+        composable(route = Screen.TodoListScreen.route) {
+            TodoListScreen()
         }
 
         composable(
@@ -29,14 +34,6 @@ fun Navigation(
             })
         ) {
             AddEditNoteScreen(navController = navController)
-        }
-
-        composable(route = Screen.AddEditTodoScreen.route + "/{todoId}",
-            arguments = listOf(navArgument(name = "todoId") {
-                type = NavType.IntType
-            })
-        ) {
-            AddEditTodoScreen(navController = navController)
         }
     }
 }
