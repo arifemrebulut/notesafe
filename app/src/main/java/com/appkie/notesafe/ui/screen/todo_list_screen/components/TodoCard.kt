@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.home_screen.components.todo
+package com.appkie.notesafe.ui.screen.todo_list_screen.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
