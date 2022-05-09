@@ -23,19 +23,17 @@ fun Navigation(
         }
 
         composable(
-            route = Screen.AddEditNoteScreen.route + "?noteId={noteId}",
+            route = Screen.AddEditNoteScreen.route + "/{noteId}",
             arguments = listOf(navArgument(name = "noteId") {
                 type = NavType.IntType
-                defaultValue = -1
             })
         ) {
             AddEditNoteScreen(navController = navController)
         }
 
-        composable(route = Screen.AddEditTodoScreen.route + "?todoId={todoId}",
+        composable(route = Screen.AddEditTodoScreen.route + "/{todoId}",
             arguments = listOf(navArgument(name = "todoId") {
                 type = NavType.IntType
-                defaultValue = -1
             })
         ) {
             AddEditTodoScreen(navController = navController)

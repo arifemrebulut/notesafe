@@ -1,30 +1,33 @@
 package com.appkie.notesafe.ui.screen.home_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Checklist
+import androidx.compose.material.icons.outlined.Description
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.data.model.Note
-import com.appkie.notesafe.ui.components.SearchBox
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.ui.screen.home_screen.components.HomeTopBar
+import com.appkie.notesafe.ui.screen.home_screen.components.NoteCard
+import com.appkie.notesafe.ui.screen.home_screen.components.SortingSettingsBar
+import com.appkie.notesafe.ui.theme.Blue
 
 @Composable
 fun HomeScreen(
@@ -34,19 +37,42 @@ fun HomeScreen(
     val notes by homeViewModel.allNotes
 
     Scaffold(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        topBar = { HomeTopBar() },
-        content = {
-            NoteList(
-                noteList = notes,
-                onNoteClicked = { noteId ->
-                    navController.navigate(Screen.AddEditNoteScreen.route + "/$noteId")
-                }
+        topBar = {
+            HomeTopBar(
+                modifier = Modifier
+                    .padding(horizontal = 12.dp, vertical = 6.dp)
             )
+        },
+        bottomBar = { BottomTabsRow() },
+        content = {
+            ContentSection(notes = notes, navController = navController)
         }
     )
+}
+
+@Composable
+fun ContentSection(
+    notes: List<Note>,
+    navController: NavController
+) {
+    Column(
+        modifier = Modifier
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        SortingSettingsBar(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 12.dp)
+        )
+
+        NoteList(
+            noteList = notes,
+            onNoteClicked = { id ->
+                navController.navigate(Screen.AddEditNoteScreen.route + "/$id")
+            }
+        )
+    }
 }
 
 @Composable
@@ -67,87 +93,67 @@ fun NoteList(
 }
 
 @Composable
-fun NoteCard(
-    note: Note,
-    onNoteClicked: (Int) -> Unit
-) {
-    Card(
-        shape = RoundedCornerShape(4.dp),
-        backgroundColor = PastelBlue,
+fun BottomTabsRow() {
+    val tabs = listOf(
+        BottomTabItem(
+            label = "Notes",
+            icon = Icons.Outlined.Description
+        ),
+        BottomTabItem(
+            label = "Todos",
+            icon = Icons.Outlined.Checklist
+        )
+    )
+    var selectedTabIndex by remember { mutableStateOf(0) }
+
+    Row(
         modifier = Modifier
-            .padding(bottom = 8.dp)
-            .clickable {
-                onNoteClicked(note.id!!)
-            }
+            .fillMaxWidth()
+            .background(Color.Black.copy(alpha = 0.03f)),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceAround
     ) {
-        Column(
-            modifier = Modifier
-                .padding(16.dp)
-        ) {
-            Text(
-                text = note.title ?: "",
-                style = MaterialTheme.typography.h6,
-                fontWeight = FontWeight.Medium
-            )
+        tabs.forEachIndexed { index, tabItem ->
+            val selected = selectedTabIndex == index
 
-            Text(
+            Column(
                 modifier = Modifier
+                    .selectable(
+                        selected = selected,
+                        onClick = { selectedTabIndex = index }
+                    )
                     .padding(vertical = 8.dp),
-                text = note.description ?: "",
-                maxLines = 3,
-                style = MaterialTheme.typography.body2,
-                fontWeight = FontWeight.Normal,
-                overflow = TextOverflow.Ellipsis
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "#Category",
-                    style = MaterialTheme.typography.subtitle2,
-                    fontWeight = FontWeight.Normal
+                Icon(
+                    imageVector = tabItem.icon,
+                    contentDescription = tabItem.label,
+                    tint = if (selected) Blue else Color.Black.copy(alpha = ContentAlpha.disabled)
                 )
 
                 Text(
-                    text = "20:15 - 12/03/2022",
-                    style = MaterialTheme.typography.caption
+                    text = tabItem.label,
+                    style = MaterialTheme.typography.body1,
+                    color = if (selected) Blue else Color.Black.copy(alpha = ContentAlpha.disabled)
                 )
             }
         }
     }
 }
 
+@Preview(showBackground = true)
 @Composable
-fun HomeTopBar(
-    modifier: Modifier = Modifier
-) {
+fun BottomTabsRowPreview() {
     Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomCenter
     ) {
-        SearchBox(
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Outlined.Search,
-                    contentDescription = "Search Icon",
-                    tint = Color.Black.copy(alpha = 0.5f),
-                    modifier = Modifier
-                        .padding(horizontal = 12.dp)
-                )
-            },
-            trailingIcon = null,
-            modifier = Modifier
-                .height(38.dp)
-                .background(
-                    Color.LightGray.copy(alpha = 0.3f),
-                    RoundedCornerShape(percent = 50)
-                ),
-            fontSize = 14.sp,
-            placeholderText = "Search your notes"
-        )
+        BottomTabsRow()
     }
 }
+
+data class BottomTabItem(
+    val label: String,
+    val icon: ImageVector
+)
