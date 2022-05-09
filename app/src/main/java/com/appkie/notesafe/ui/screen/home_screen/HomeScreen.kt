@@ -18,15 +18,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.screen.home_screen.components.HomeTopBar
-import com.appkie.notesafe.ui.screen.home_screen.components.NoteCard
-import com.appkie.notesafe.ui.screen.home_screen.components.SortingSettingsBar
+import com.appkie.notesafe.ui.screen.home_screen.components.*
+import com.appkie.notesafe.ui.screen.home_screen.components.note.NoteCard
+import com.appkie.notesafe.ui.screen.home_screen.components.note.NotesTab
+import com.appkie.notesafe.ui.screen.home_screen.components.todo.TodosTab
 import com.appkie.notesafe.ui.theme.Blue
 
 @Composable
@@ -35,6 +36,9 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     val notes by homeViewModel.allNotes
+    val todos by homeViewModel.allTodos
+
+    var selectedTabIndex by remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
@@ -43,9 +47,21 @@ fun HomeScreen(
                     .padding(horizontal = 12.dp, vertical = 6.dp)
             )
         },
-        bottomBar = { BottomTabsRow() },
+        bottomBar = {
+            BottomTabsRow(
+                selectedTabIndex = selectedTabIndex,
+                onTabSelected = { index ->
+                    selectedTabIndex = index
+                }
+            )
+        },
         content = {
-            ContentSection(notes = notes, navController = navController)
+            ContentSection(
+                notes = notes,
+                todos = todos,
+                navController = navController,
+                selectedTabIndex = selectedTabIndex
+            )
         }
     )
 }
@@ -53,7 +69,9 @@ fun HomeScreen(
 @Composable
 fun ContentSection(
     notes: List<Note>,
-    navController: NavController
+    todos: List<Todo>,
+    navController: NavController,
+    selectedTabIndex: Int
 ) {
     Column(
         modifier = Modifier
@@ -66,12 +84,18 @@ fun ContentSection(
                 .padding(bottom = 12.dp)
         )
 
-        NoteList(
-            noteList = notes,
-            onNoteClicked = { id ->
-                navController.navigate(Screen.AddEditNoteScreen.route + "/$id")
-            }
-        )
+        when (selectedTabIndex) {
+            0 -> NotesTab(
+                noteList = notes,
+                onNoteClicked = { id ->
+                    navController.navigate(Screen.AddEditNoteScreen.route + "/$id")
+                }
+            )
+            1 -> TodosTab(
+                todoList = todos,
+                onCheckedChange = {}
+            )
+        }
     }
 }
 
@@ -93,7 +117,10 @@ fun NoteList(
 }
 
 @Composable
-fun BottomTabsRow() {
+fun BottomTabsRow(
+    selectedTabIndex: Int,
+    onTabSelected: (Int) -> Unit
+) {
     val tabs = listOf(
         BottomTabItem(
             label = "Notes",
@@ -104,7 +131,6 @@ fun BottomTabsRow() {
             icon = Icons.Outlined.Checklist
         )
     )
-    var selectedTabIndex by remember { mutableStateOf(0) }
 
     Row(
         modifier = Modifier
@@ -120,7 +146,7 @@ fun BottomTabsRow() {
                 modifier = Modifier
                     .selectable(
                         selected = selected,
-                        onClick = { selectedTabIndex = index }
+                        onClick = { onTabSelected(index) }
                     )
                     .padding(vertical = 8.dp),
                 verticalArrangement = Arrangement.Center,
@@ -139,17 +165,6 @@ fun BottomTabsRow() {
                 )
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun BottomTabsRowPreview() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.BottomCenter
-    ) {
-        BottomTabsRow()
     }
 }
 

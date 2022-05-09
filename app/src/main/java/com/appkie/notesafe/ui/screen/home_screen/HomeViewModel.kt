@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,8 +24,12 @@ class HomeViewModel @Inject constructor(
     private val _allNotes = mutableStateOf<List<Note>>(emptyList())
     val allNotes: State<List<Note>> = _allNotes
 
+    private val _allTodos = mutableStateOf<List<Todo>>(emptyList())
+    val allTodos: State<List<Todo>> = _allTodos
+
     init {
         getAllNotes()
+        getAllTodos()
     }
 
     private fun getAllNotes() {
@@ -36,6 +41,18 @@ class HomeViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "getAllNotes: $e")
+        }
+    }
+    
+    private fun getAllTodos() {
+        try {
+            viewModelScope.launch { 
+                todoRepository.getAllTodos().collect() {
+                    _allTodos.value = it
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "getAllTodos: $e")
         }
     }
 }
