@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.home_screen.components.note
+package com.appkie.notesafe.ui.screen.note_list_screen.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
