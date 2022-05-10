@@ -10,4 +10,8 @@ data class Note(
     val id: Int? = null,
     val title: String,
     val description: String,
+    val category: String,
+    val fav: Boolean,
+    val color: Int,
+    val creationTime: Long
 )
