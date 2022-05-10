@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.home_screen.components
+package com.appkie.notesafe.ui.components
 
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
