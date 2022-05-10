@@ -38,7 +38,7 @@ fun AddEditNoteScreen(
                 },
                 onSaveClicked = {
                     addEditNoteViewModel.saveNote()
-                    navController.navigate(Screen.HomeScreen.route)
+                    navController.navigate(Screen.NoteListScreen.route)
                 },
                 onShareClicked = {
 
@@ -54,7 +54,7 @@ fun AddEditNoteScreen(
                     if (id != -1) {
                         addEditNoteViewModel.deleteNote()
                     }
-                    navController.navigate(Screen.HomeScreen.route)
+                    navController.navigate(Screen.NoteListScreen.route)
                 }
             )
         }

@@ -17,7 +17,7 @@ import com.appkie.notesafe.ui.screen.todo_list_screen.components.TodoCard
 
 @Composable
 fun TodoListScreen(
-    todoListViewModel: TodoListViewModel = hiltViewModel(),
+    todoListViewModel: TodoListViewModel = hiltViewModel()
 ) {
     val todoList by todoListViewModel.allTodos
 

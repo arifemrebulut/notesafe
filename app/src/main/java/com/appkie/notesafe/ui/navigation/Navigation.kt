@@ -1,5 +1,6 @@
 package com.appkie.notesafe.ui.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -7,10 +8,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteScreen
-import com.appkie.notesafe.ui.screen.home_screen.HomeScreen
 import com.appkie.notesafe.ui.screen.note_list_screen.NoteListScreen
 import com.appkie.notesafe.ui.screen.todo_list_screen.TodoListScreen
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Navigation(
     navController: NavHostController

@@ -12,8 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.room.Delete
 import com.appkie.notesafe.ui.theme.Black
 import com.appkie.notesafe.ui.theme.White
 
@@ -101,5 +103,13 @@ fun DeleteDialog(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+fun DeleteDialogPreview() {
+    DeleteDialog(onDismiss = { /*TODO*/ }, onCancelClicked = { /*TODO*/ }) {
+        
     }
 }
