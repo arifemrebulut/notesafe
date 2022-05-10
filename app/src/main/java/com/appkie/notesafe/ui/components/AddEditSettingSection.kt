@@ -25,10 +25,11 @@ fun AddEditSettingsSection() {
     val icon = if (expended) Icons.Outlined.ArrowDropUp else Icons.Outlined.ArrowDropDown
 
     Column {
+
         Divider()
 
         Row(
-            modifier = Modifier
+            modifier =  Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -109,6 +110,7 @@ fun AddEditSettingsSection() {
                 )
             }
         }
+
         Divider()
     }
 }
