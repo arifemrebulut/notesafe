@@ -66,6 +66,7 @@ fun AddEditNoteScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AddEditSettingsSection()
+
             NoteContent(
                 titleState = titleState,
                 onTitleChange = {

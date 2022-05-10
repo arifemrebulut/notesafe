@@ -64,12 +64,8 @@ fun AddEditTodoScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            AddEditSettingsSection(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp, vertical = 12.dp),
-                showDividers = true
-            )
+            AddEditSettingsSection()
+
             TodoContent(
                 titleState = titleState,
                 onTitleChange = {
