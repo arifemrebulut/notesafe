@@ -58,7 +58,9 @@ fun TodoListScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(bottom = 12.dp),
-                onCategoryChange = {},
+                onCategoryChange = {
+                    todoListViewModel.onEvent(TodoListUiEvent.ChangeCategory(it))
+                },
                 onSortingFilterChange = {}
             )
 
