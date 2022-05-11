@@ -14,5 +14,5 @@ val PastelBrown = Color(0xFFFFE6C8)
 
 val Black = Color(0xFF000000)
 val White = Color(0xFFFFFFFF)
-val WhiteVariant = Color(0xFFF0F0F0)
+val WhiteVariant = Color(0xFFF7F7F7)
 val Gray = Color(0xFFCCCCCC)
