@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
+import com.appkie.notesafe.util.Utils.sortByDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.DateFormat
@@ -62,13 +63,10 @@ class NoteListViewModel @Inject constructor(
         try {
             viewModelScope.launch {
                 noteRepository.getAllNotes().collect { noteList ->
-                    _allNotes.value = if (currentCategory == "All") {
-                        noteList
-                    } else {
-                        noteList.filter {
-                            it.category == currentCategory
-                        }
-                    }
+
+                    val notesFilteredByCategory = filterByCategory(noteList, currentCategory)
+
+                    _allNotes.value = sortByDateViewModel(notesFilteredByCategory, currentOrderType)
                 }
             }
         } catch (e: Exception) {
@@ -85,6 +83,33 @@ class NoteListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "searchNote: $e")
+        }
+    }
+
+    private fun filterByCategory(notes: List<Note>, category: String) : List<Note> {
+
+        return if (category == "All") {
+            notes
+        } else {
+            notes.filter {
+                it.category == category
+            }
+        }
+    }
+
+    private fun sortByDateViewModel(notes: List<Note>, orderType: OrderType) : List<Note> {
+
+        val simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.US)
+
+        return if (orderType == OrderType.NEWEST) {
+            notes.sortedByDescending {
+                simpleDateFormat.parse(it.creationTime)
+            }
+
+        } else {
+            notes.sortedBy {
+                simpleDateFormat.parse(it.creationTime)
+            }
         }
     }
 }

@@ -5,11 +5,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.TodoRepository
+import com.appkie.notesafe.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -78,6 +80,33 @@ class TodoListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "searchTodo: $e")
+        }
+    }
+
+    private fun filterByCategory(todos: List<Todo>, category: String) : List<Todo> {
+
+        return if (category == "All") {
+            todos
+        } else {
+            todos.filter {
+                it.category == category
+            }
+        }
+    }
+
+    private fun sortByDateViewModel(todos: List<Todo>, orderType: OrderType) : List<Todo> {
+
+        val simpleDateFormat = SimpleDateFormat("HH:mm dd.MM.yyyy", Locale.US)
+
+        return if (orderType == OrderType.NEWEST) {
+            todos.sortedByDescending {
+                simpleDateFormat.parse(it.creationTime)
+            }
+
+        } else {
+            todos.sortedBy {
+                simpleDateFormat.parse(it.creationTime)
+            }
         }
     }
 }
