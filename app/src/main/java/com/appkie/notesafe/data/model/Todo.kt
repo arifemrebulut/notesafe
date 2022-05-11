@@ -13,5 +13,5 @@ data class Todo(
     val category: String,
     val fav: Boolean,
     val color: Int,
-    val creationTime: Long
+    val creationTime: String
 )
