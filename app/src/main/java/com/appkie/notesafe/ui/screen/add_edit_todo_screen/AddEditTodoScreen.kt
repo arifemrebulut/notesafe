@@ -21,6 +21,7 @@ fun AddEditTodoScreen(
 ) {
     val id = addEditTodoViewModel.id
     val titleState = addEditTodoViewModel.title
+    val categoryState = addEditTodoViewModel.category
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -64,7 +65,12 @@ fun AddEditTodoScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            AddEditSettingsSection()
+            AddEditSettingsSection(
+                currentCategory = categoryState,
+                onCategorySelected = {
+                    addEditTodoViewModel.category = it
+                }
+            )
 
             TodoContent(
                 titleState = titleState,

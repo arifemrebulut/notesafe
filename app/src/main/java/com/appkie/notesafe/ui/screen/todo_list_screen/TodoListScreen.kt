@@ -57,7 +57,9 @@ fun TodoListScreen(
             SortingSettingsBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp)
+                    .padding(bottom = 12.dp),
+                onCategoryChange = {},
+                onSortingFilterChange = {}
             )
 
             LazyColumn(

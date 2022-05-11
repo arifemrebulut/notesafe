@@ -21,6 +21,7 @@ class AddEditTodoViewModel @Inject constructor(
     var id by mutableStateOf(-1)
     var title by mutableStateOf("")
     var checked by mutableStateOf(false)
+    var category by mutableStateOf("All")
 
     init {
         getTodoIdFromStateHandle()
@@ -51,7 +52,11 @@ class AddEditTodoViewModel @Inject constructor(
             val todo = Todo(
                 id = if(id != -1) id else null,
                 title = title,
-                checked = checked
+                checked = checked,
+                category = category,
+                fav = false,
+                creationTime = 999999999,
+                color = 123
             )
             todoRepository.saveTodo(todo = todo)
         }
@@ -62,7 +67,11 @@ class AddEditTodoViewModel @Inject constructor(
             val todo = Todo(
                 id = id,
                 title = title,
-                checked = checked
+                checked = checked,
+                category = category,
+                fav = false,
+                creationTime = 999999999,
+                color = 123
             )
             todoRepository.deleteTodo(todo = todo)
         }

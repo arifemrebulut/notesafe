@@ -22,6 +22,7 @@ fun AddEditNoteScreen(
     val id = addEditNoteViewModel.id
     val titleState = addEditNoteViewModel.title
     val descriptionState = addEditNoteViewModel.description
+    val categoryState = addEditNoteViewModel.category
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -65,7 +66,12 @@ fun AddEditNoteScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            AddEditSettingsSection()
+            AddEditSettingsSection(
+                currentCategory = categoryState,
+                onCategorySelected = { selectedCategory ->
+                    addEditNoteViewModel.category = selectedCategory
+                }
+            )
 
             NoteContent(
                 titleState = titleState,

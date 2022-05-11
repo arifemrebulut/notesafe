@@ -40,16 +40,16 @@ fun TodoCard(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun TodoCardPreview() {
-    NotesafeTheme {
-        TodoCard(
-            todo = Todo(
-                title = "Buy some food from grocery store",
-                checked = true
-            ),
-            onCheckedChange = {}
-        )
-    }
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun TodoCardPreview() {
+//    NotesafeTheme {
+//        TodoCard(
+//            todo = Todo(
+//                title = "Buy some food from grocery store",
+//                checked = true
+//            ),
+//            onCheckedChange = {}
+//        )
+//    }
+//}

@@ -19,7 +19,10 @@ import com.appkie.notesafe.ui.theme.PastelPurple
 import com.appkie.notesafe.ui.theme.PastelYellow
 
 @Composable
-fun AddEditSettingsSection() {
+fun AddEditSettingsSection(
+    currentCategory: String,
+    onCategorySelected: (String) -> Unit
+) {
 
     var expended by remember { mutableStateOf(false) }
     val icon = if (expended) Icons.Outlined.ArrowDropUp else Icons.Outlined.ArrowDropDown
@@ -29,7 +32,7 @@ fun AddEditSettingsSection() {
         Divider()
 
         Row(
-            modifier =  Modifier
+            modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 12.dp),
             verticalAlignment = Alignment.CenterVertically,
@@ -45,7 +48,7 @@ fun AddEditSettingsSection() {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Category",
+                        text = currentCategory,
                         style = MaterialTheme.typography.h6,
                     )
                     Icon(
@@ -59,14 +62,32 @@ fun AddEditSettingsSection() {
                     expanded = expended,
                     onDismissRequest = { expended = false }
                 ) {
-                    DropdownMenuItem(onClick = { expended = false }) {
-                        Text(text = "Item 1")
+                    DropdownMenuItem(
+                        onClick = {
+                            expended = false
+                            onCategorySelected("All")
+                        }
+                    ) {
+                        Text(text = "All")
                     }
-                    DropdownMenuItem(onClick = { expended = false }) {
-                        Text(text = "Item 2")
+
+                    DropdownMenuItem(
+                        onClick = {
+                            expended = false
+                            onCategorySelected("Work")
+                        }
+                    ) {
+                        Text(text = "Work")
                     }
-                    DropdownMenuItem(onClick = { expended = false }) {
-                        Text(text = "Item 3")
+
+                    DropdownMenuItem(
+                        onClick = {
+                            expended = false
+                            onCategorySelected("School")
+                        }
+                    ) {
+
+                        Text(text = "School")
                     }
                 }
             }

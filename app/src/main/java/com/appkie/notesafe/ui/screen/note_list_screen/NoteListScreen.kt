@@ -59,7 +59,11 @@ fun NoteListScreen(
             SortingSettingsBar(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp)
+                    .padding(bottom = 12.dp),
+                onCategoryChange = {
+                    noteListViewModel.onEvent(NoteListUiEvent.ChangeCategory(it))
+                },
+                onSortingFilterChange = {}
             )
 
             LazyColumn(
@@ -68,7 +72,7 @@ fun NoteListScreen(
                 items(noteList) { item ->
                     NoteCard(
                         note = item,
-                        onNoteClicked = { navController.navigate(Screen.AddEditNoteScreen.route + "/{${item.id}}") }
+                        onNoteClicked = { navController.navigate(Screen.AddEditNoteScreen.route + "/${item.id}") }
                     )
                 }
             }

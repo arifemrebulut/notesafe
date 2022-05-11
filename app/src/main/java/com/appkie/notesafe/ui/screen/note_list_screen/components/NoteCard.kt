@@ -56,7 +56,7 @@ fun NoteCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "#Category",
+                    text = "#${note.category}",
                     style = MaterialTheme.typography.subtitle2,
                     fontWeight = FontWeight.Normal
                 )

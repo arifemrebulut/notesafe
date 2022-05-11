@@ -18,23 +18,24 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideNoteDatabase(application: Application) : NoteDatabase {
+    fun provideNoteDatabase(application: Application): NoteDatabase {
         return Room.databaseBuilder(
             application,
             NoteDatabase::class.java,
-            DATABASE_NAME
-        ).build()
+            DATABASE_NAME)
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides
     @Singleton
-    fun provideNoteRepository(database: NoteDatabase) : NoteRepository {
+    fun provideNoteRepository(database: NoteDatabase): NoteRepository {
         return NoteRepository(database.noteDao)
     }
 
     @Provides
     @Singleton
-    fun provideTodoRepository(database: NoteDatabase) : TodoRepository {
+    fun provideTodoRepository(database: NoteDatabase): TodoRepository {
         return TodoRepository(database.todoDao)
     }
 }

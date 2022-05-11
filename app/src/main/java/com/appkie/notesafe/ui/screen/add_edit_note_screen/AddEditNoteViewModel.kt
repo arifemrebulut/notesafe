@@ -1,5 +1,6 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
@@ -16,9 +17,12 @@ class AddEditNoteViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    val TAG = "AddEditNoteViewModel"
+
     var id by mutableStateOf(-1)
     var title by mutableStateOf("")
     var description by mutableStateOf("")
+    var category by mutableStateOf("All")
 
     init {
         getNoteIdFromStateHandle()
@@ -39,6 +43,7 @@ class AddEditNoteViewModel @Inject constructor(
                 note?.let { note ->
                     title = note.title
                     description = note.description
+                    category = note.category
                 }
             }
         }
@@ -49,7 +54,11 @@ class AddEditNoteViewModel @Inject constructor(
             val note = Note(
                 id = if(id != -1) id else null,
                 title = title,
-                description = description
+                description = description,
+                category = category,
+                fav = false,
+                creationTime = 999999999,
+                color = 123
             )
             noteRepository.saveNote(note = note)
         }
@@ -60,7 +69,11 @@ class AddEditNoteViewModel @Inject constructor(
             val note = Note(
                 id = id,
                 title = title,
-                description = description
+                description = description,
+                category = category,
+                fav = false,
+                creationTime = 999999999,
+                color = 123
             )
             noteRepository.deleteNote(note = note)
         }

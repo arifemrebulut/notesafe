@@ -12,7 +12,6 @@ import com.appkie.notesafe.ui.screen.add_edit_todo_screen.AddEditTodoScreen
 import com.appkie.notesafe.ui.screen.note_list_screen.NoteListScreen
 import com.appkie.notesafe.ui.screen.todo_list_screen.TodoListScreen
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun Navigation(
     navController: NavHostController

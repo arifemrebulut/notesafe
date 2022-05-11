@@ -1,5 +1,6 @@
 package com.appkie.notesafe.ui.components
 
+import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
@@ -23,11 +24,15 @@ import com.appkie.notesafe.ui.theme.Blue
 
 @Composable
 fun SortingSettingsBar(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCategoryChange: (String) -> Unit,
+    onSortingFilterChange: (String) -> Unit
 ) {
+    val TAG = "SortingSettingsBar"
+
     val scrollState = rememberScrollState()
 
-    val folders = listOf("School", "Work", "Home", "Shopping", "Coding", "Kotlin" , "Android")
+    val folders = listOf("All", "School", "Work", "Home", "Shopping", "Coding", "Kotlin", "Android")
 
     var selectedFolderIndex by remember { mutableStateOf(0) }
     var sortingDropdownExpended by remember { mutableStateOf(false) }
@@ -62,7 +67,11 @@ fun SortingSettingsBar(
                         .padding(6.dp)
                         .selectable(
                             selected = selected,
-                            onClick = { selectedFolderIndex = index }
+                            onClick = {
+                                selectedFolderIndex = index
+                                onCategoryChange(item)
+                                Log.d(TAG, "SortingSettingsBar: $item")
+                            }
                         ),
                     fontWeight = FontWeight.Medium,
                     color = if (selected) Blue else Color.Black.copy(alpha = ContentAlpha.disabled)
@@ -101,10 +110,20 @@ fun SortingSettingsBar(
                     expanded = sortingDropdownExpended,
                     onDismissRequest = { sortingDropdownExpended = false }
                 ) {
-                    DropdownMenuItem(onClick = { sortingDropdownExpended = false }) {
+                    DropdownMenuItem(
+                        onClick = {
+                            sortingDropdownExpended = false
+                            onSortingFilterChange("New")
+                        }
+                    ) {
                         Text(text = "New")
                     }
-                    DropdownMenuItem(onClick = { sortingDropdownExpended = false }) {
+                    DropdownMenuItem(
+                        onClick = {
+                            sortingDropdownExpended = false
+                            onSortingFilterChange("Old")
+                        }
+                    ) {
                         Text(text = "Old")
                     }
                 }
@@ -113,8 +132,8 @@ fun SortingSettingsBar(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun SortingSettingsBarPreview() {
-    SortingSettingsBar()
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun SortingSettingsBarPreview() {
+//    SortingSettingsBar()
+//}

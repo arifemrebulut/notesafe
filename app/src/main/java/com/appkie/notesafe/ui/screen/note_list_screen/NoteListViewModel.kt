@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
-import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,11 +25,33 @@ class NoteListViewModel @Inject constructor(
         getAllNotes()
     }
 
-    private fun getAllNotes() {
+    fun onEvent(event: NoteListUiEvent) {
+        when (event) {
+            is NoteListUiEvent.ChangeCategory -> {
+                getAllNotes(event.category)
+            }
+            is NoteListUiEvent.Order -> {
+
+            }
+            is NoteListUiEvent.DeleteNote -> {
+
+            }
+        }
+    }
+
+    fun getAllNotes(
+        category: String = "All"
+    ) {
         try {
             viewModelScope.launch {
-                noteRepository.getAllNotes().collect {
-                    _allNotes.value = it
+                noteRepository.getAllNotes().collect { noteList ->
+                    _allNotes.value = if (category == "All") {
+                        noteList
+                    } else {
+                        noteList.filter {
+                            it.category == category
+                        }
+                    }
                 }
             }
         } catch (e: Exception) {
