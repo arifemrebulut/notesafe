@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.util.OrderType
+import com.appkie.notesafe.util.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -53,6 +54,9 @@ class TodoListViewModel @Inject constructor(
             is TodoListUiEvent.DeleteTodo -> {
 
             }
+            is TodoListUiEvent.CheckedChange -> {
+                updateTodo(todo = event.todo, checked = event.checked)
+            }
         }
     }
 
@@ -80,6 +84,19 @@ class TodoListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "searchTodo: $e")
+        }
+    }
+
+    private fun updateTodo(todo: Todo, checked: Boolean) {
+        try {
+            viewModelScope.launch {
+                val updatedTodo = todo.copy(
+                    checked = checked,
+                )
+                todoRepository.saveTodo(todo = updatedTodo)
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "updateTodo: $e")
         }
     }
 

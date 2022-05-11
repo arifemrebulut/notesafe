@@ -77,7 +77,9 @@ fun TodoListScreen(
                 items(todoList) { item ->
                     TodoCard(
                         todo = item,
-                        onCheckedChange = {}
+                        onCheckedChange = {
+                            todoListViewModel.onEvent(TodoListUiEvent.CheckedChange(todo = item, checked = it))
+                        }
                     )
                 }
             }

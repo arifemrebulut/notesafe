@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
-import com.appkie.notesafe.util.Utils.sortByDate
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.DateFormat
