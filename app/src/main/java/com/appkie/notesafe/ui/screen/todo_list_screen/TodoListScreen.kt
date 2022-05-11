@@ -63,7 +63,9 @@ fun TodoListScreen(
                 onCategoryChange = {
                     todoListViewModel.onEvent(TodoListUiEvent.ChangeCategory(it))
                 },
-                onSortingFilterChange = {}
+                onSortingFilterChange = { orderType ->
+                    todoListViewModel.onEvent(TodoListUiEvent.OrderTodos(orderType))
+                }
             )
 
             LazyColumn(

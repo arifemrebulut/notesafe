@@ -68,7 +68,9 @@ fun NoteListScreen(
                 onCategoryChange = {
                     noteListViewModel.onEvent(NoteListUiEvent.ChangeCategory(it))
                 },
-                onSortingFilterChange = {}
+                onSortingFilterChange = { orderType ->
+                    noteListViewModel.onEvent(NoteListUiEvent.OrderNotes(orderType))
+                }
             )
 
             LazyColumn(

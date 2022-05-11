@@ -7,8 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.NoteRepository
+import com.appkie.notesafe.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,6 +31,9 @@ class NoteListViewModel @Inject constructor(
     private val _searchTextState = mutableStateOf("")
     val searchTextState: State<String> = _searchTextState
 
+    private var currentCategory: String = "All"
+    private var currentOrderType: OrderType = OrderType.NEWEST
+
     init {
         getAllNotes()
     }
@@ -34,10 +41,12 @@ class NoteListViewModel @Inject constructor(
     fun onEvent(event: NoteListUiEvent) {
         when (event) {
             is NoteListUiEvent.ChangeCategory -> {
-                getAllNotes(event.category)
+                currentCategory = event.category
+                getAllNotes()
             }
             is NoteListUiEvent.OrderNotes -> {
-
+                currentOrderType = event.orderType
+                getAllNotes()
             }
             is NoteListUiEvent.SearchNote -> {
                 _searchTextState.value = event.searchQuery
@@ -49,15 +58,15 @@ class NoteListViewModel @Inject constructor(
         }
     }
 
-    private fun getAllNotes(category: String = "All") {
+    private fun getAllNotes() {
         try {
             viewModelScope.launch {
                 noteRepository.getAllNotes().collect { noteList ->
-                    _allNotes.value = if (category == "All") {
+                    _allNotes.value = if (currentCategory == "All") {
                         noteList
                     } else {
                         noteList.filter {
-                            it.category == category
+                            it.category == currentCategory
                         }
                     }
                 }

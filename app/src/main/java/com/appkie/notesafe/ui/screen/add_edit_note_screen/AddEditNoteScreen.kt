@@ -13,6 +13,8 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.DeleteDialog
 import com.appkie.notesafe.ui.navigation.Screen
+import java.text.DateFormat.getDateInstance
+import java.util.*
 
 @Composable
 fun AddEditNoteScreen(

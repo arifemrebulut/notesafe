@@ -62,7 +62,7 @@ fun NoteCard(
                 )
 
                 Text(
-                    text = "20:15 - 12/03/2022",
+                    text = note.creationTime,
                     style = MaterialTheme.typography.caption
                 )
             }

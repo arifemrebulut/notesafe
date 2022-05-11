@@ -1,12 +1,13 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
-import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.NoteRepository
+import com.appkie.notesafe.util.Utils
+import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -57,7 +58,7 @@ class AddEditNoteViewModel @Inject constructor(
                 description = description,
                 category = category,
                 fav = false,
-                creationTime = 999999999,
+                creationTime = getFormattedTime(),
                 color = 123
             )
             noteRepository.saveNote(note = note)
@@ -72,7 +73,7 @@ class AddEditNoteViewModel @Inject constructor(
                 description = description,
                 category = category,
                 fav = false,
-                creationTime = 999999999,
+                creationTime = getFormattedTime(),
                 color = 123
             )
             noteRepository.deleteNote(note = note)

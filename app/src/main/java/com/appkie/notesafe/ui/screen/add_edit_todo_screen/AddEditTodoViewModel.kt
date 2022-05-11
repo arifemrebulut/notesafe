@@ -8,8 +8,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.TodoRepository
+import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -55,7 +58,7 @@ class AddEditTodoViewModel @Inject constructor(
                 checked = checked,
                 category = category,
                 fav = false,
-                creationTime = 999999999,
+                creationTime = getFormattedTime(),
                 color = 123
             )
             todoRepository.saveTodo(todo = todo)
@@ -70,7 +73,7 @@ class AddEditTodoViewModel @Inject constructor(
                 checked = checked,
                 category = category,
                 fav = false,
-                creationTime = 999999999,
+                creationTime = getFormattedTime(),
                 color = 123
             )
             todoRepository.deleteTodo(todo = todo)

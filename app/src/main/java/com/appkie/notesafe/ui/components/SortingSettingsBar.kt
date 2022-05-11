@@ -18,15 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.ui.theme.Blue
+import com.appkie.notesafe.util.OrderType
 
 @Composable
 fun SortingSettingsBar(
     modifier: Modifier = Modifier,
     onCategoryChange: (String) -> Unit,
-    onSortingFilterChange: (String) -> Unit
+    onSortingFilterChange: (OrderType) -> Unit
 ) {
     val TAG = "SortingSettingsBar"
 
@@ -113,18 +113,18 @@ fun SortingSettingsBar(
                     DropdownMenuItem(
                         onClick = {
                             sortingDropdownExpended = false
-                            onSortingFilterChange("New")
+                            onSortingFilterChange(OrderType.NEWEST)
                         }
                     ) {
-                        Text(text = "New")
+                        Text(text = "Newest")
                     }
                     DropdownMenuItem(
                         onClick = {
                             sortingDropdownExpended = false
-                            onSortingFilterChange("Old")
+                            onSortingFilterChange(OrderType.OLDEST)
                         }
                     ) {
-                        Text(text = "Old")
+                        Text(text = "Oldest")
                     }
                 }
             }
