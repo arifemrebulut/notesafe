@@ -6,5 +6,6 @@ import com.appkie.notesafe.util.Order
 sealed class NoteListUiEvent {
     data class ChangeCategory(val category: String) : NoteListUiEvent()
     data class OrderNotes(val order: Order) : NoteListUiEvent()
+    data class SearchNote(val searchQuery: String) : NoteListUiEvent()
     data class DeleteNote(val note: Note) : NoteListUiEvent()
 }

@@ -1,5 +1,6 @@
 package com.appkie.notesafe.ui.screen.note_list_screen
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -16,7 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.appkie.notesafe.ui.components.HomeTopBar
+import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.ui.components.SearchTopBar
 import com.appkie.notesafe.ui.components.SortingSettingsBar
 import com.appkie.notesafe.ui.navigation.Screen
 import com.appkie.notesafe.ui.screen.note_list_screen.components.NoteCard
@@ -27,13 +29,16 @@ fun NoteListScreen(
     noteListViewModel: NoteListViewModel = hiltViewModel(),
 ) {
 
-    val noteList by noteListViewModel.allNotes
+    val notes by noteListViewModel.allNotes
+    val searchedNotes by noteListViewModel.searchedNotes
+    val searching = noteListViewModel.searchTextState.value.isNotBlank()
 
     Scaffold(
         topBar = {
-            HomeTopBar(
-                modifier = Modifier
-                    .padding(horizontal = 12.dp, vertical = 6.dp)
+            SearchTopBar(
+                onSearchTextChange = { searchQuery ->
+                    noteListViewModel.onEvent(NoteListUiEvent.SearchNote(searchQuery))
+                },
             )
         },
         floatingActionButton = {
@@ -69,6 +74,9 @@ fun NoteListScreen(
             LazyColumn(
                 contentPadding = PaddingValues(top = 1.dp, bottom = 52.dp)
             ) {
+
+                val noteList: List<Note> = if (searching) searchedNotes else notes
+
                 items(noteList) { item ->
                     NoteCard(
                         note = item,

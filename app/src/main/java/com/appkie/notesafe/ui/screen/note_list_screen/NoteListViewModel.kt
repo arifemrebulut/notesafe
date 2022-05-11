@@ -21,6 +21,12 @@ class NoteListViewModel @Inject constructor(
     private val _allNotes = mutableStateOf<List<Note>>(emptyList())
     val allNotes: State<List<Note>> = _allNotes
 
+    private val _searchedNotes = mutableStateOf<List<Note>>(emptyList())
+    val searchedNotes: State<List<Note>> = _searchedNotes
+
+    private val _searchTextState = mutableStateOf("")
+    val searchTextState: State<String> = _searchTextState
+
     init {
         getAllNotes()
     }
@@ -33,15 +39,17 @@ class NoteListViewModel @Inject constructor(
             is NoteListUiEvent.OrderNotes -> {
 
             }
+            is NoteListUiEvent.SearchNote -> {
+                _searchTextState.value = event.searchQuery
+                searchNote(event.searchQuery)
+            }
             is NoteListUiEvent.DeleteNote -> {
 
             }
         }
     }
 
-    private fun getAllNotes(
-        category: String = "All"
-    ) {
+    private fun getAllNotes(category: String = "All") {
         try {
             viewModelScope.launch {
                 noteRepository.getAllNotes().collect { noteList ->
@@ -56,6 +64,18 @@ class NoteListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "getAllNotes: $e")
+        }
+    }
+
+    private fun searchNote(searchQuery: String) {
+        try {
+            viewModelScope.launch {
+                noteRepository.searchNote(searchQuery = "%$searchQuery%").collect {
+                    _searchedNotes.value = it
+                }
+            }
+        } catch (e: Exception) {
+            Log.d(TAG, "searchNote: $e")
         }
     }
 }
