@@ -17,6 +17,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.ui.theme.Blue
+import com.appkie.notesafe.ui.theme.White
+import com.appkie.notesafe.ui.theme.WhiteVariant
 
 @Composable
 fun BottomTabsRow(
@@ -37,7 +39,7 @@ fun BottomTabsRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Black.copy(alpha = 0.03f)),
+            .background(WhiteVariant),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceAround
     ) {
