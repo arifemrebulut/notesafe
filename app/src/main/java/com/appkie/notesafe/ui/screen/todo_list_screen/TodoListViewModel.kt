@@ -30,6 +30,9 @@ class TodoListViewModel @Inject constructor(
     private val _searchTextState = mutableStateOf("")
     val searchTextState: State<String> = _searchTextState
 
+    private var currentCategory: String = "All"
+    private var currentOrderType: OrderType = OrderType.NEWEST
+
     init {
         getAllTodos()
     }
@@ -37,10 +40,12 @@ class TodoListViewModel @Inject constructor(
     fun onEvent(event: TodoListUiEvent) {
         when (event) {
             is TodoListUiEvent.ChangeCategory -> {
-                getAllTodos(event.category)
+                currentCategory = event.category
+                getAllTodos()
             }
             is TodoListUiEvent.OrderTodos -> {
-
+                currentOrderType = event.orderType
+                getAllTodos()
             }
             is TodoListUiEvent.SearchTodo -> {
                 searchTodo(event.searchQuery)
@@ -51,19 +56,14 @@ class TodoListViewModel @Inject constructor(
         }
     }
 
-    private fun getAllTodos(
-        category: String = "All"
-    ) {
+    private fun getAllTodos() {
         try {
             viewModelScope.launch {
                 todoRepository.getAllTodos().collect { todoList ->
-                    _allTodos.value = if (category == "All") {
-                        todoList
-                    } else {
-                        todoList.filter {
-                            it.category == category
-                        }
-                    }
+
+                    val notesFilteredByCategory = filterByCategory(todoList, currentCategory)
+
+                    _allTodos.value = sortByDateViewModel(notesFilteredByCategory, currentOrderType)
                 }
             }
         } catch (e: Exception) {
