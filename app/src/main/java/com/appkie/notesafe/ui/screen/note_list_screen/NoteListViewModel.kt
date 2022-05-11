@@ -30,7 +30,7 @@ class NoteListViewModel @Inject constructor(
             is NoteListUiEvent.ChangeCategory -> {
                 getAllNotes(event.category)
             }
-            is NoteListUiEvent.Order -> {
+            is NoteListUiEvent.OrderNotes -> {
 
             }
             is NoteListUiEvent.DeleteNote -> {
@@ -39,7 +39,7 @@ class NoteListViewModel @Inject constructor(
         }
     }
 
-    fun getAllNotes(
+    private fun getAllNotes(
         category: String = "All"
     ) {
         try {

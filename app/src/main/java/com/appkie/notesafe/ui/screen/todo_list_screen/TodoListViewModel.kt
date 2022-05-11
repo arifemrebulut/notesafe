@@ -25,11 +25,33 @@ class TodoListViewModel @Inject constructor(
         getAllTodos()
     }
 
-    private fun getAllTodos() {
+    fun onEvent(event: TodoListUiEvent) {
+        when (event) {
+            is TodoListUiEvent.ChangeCategory -> {
+                getAllTodos(event.category)
+            }
+            is TodoListUiEvent.OrderTodos -> {
+
+            }
+            is TodoListUiEvent.DeleteTodo -> {
+
+            }
+        }
+    }
+
+    private fun getAllTodos(
+        category: String = "All"
+    ) {
         try {
             viewModelScope.launch {
-                todoRepository.getAllTodos().collect {
-                    _allTodos.value = it
+                todoRepository.getAllTodos().collect { todoList ->
+                    _allTodos.value = if (category == "All") {
+                        todoList
+                    } else {
+                        todoList.filter {
+                            it.category == category
+                        }
+                    }
                 }
             }
         } catch (e: Exception) {
