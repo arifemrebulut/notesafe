@@ -28,14 +28,24 @@ fun AddEditTodoScreen(
     navController: NavController,
     addEditTodoViewModel: AddEditTodoViewModel = hiltViewModel()
 ) {
-    val id = addEditTodoViewModel.id
-    val titleState = addEditTodoViewModel.title
-    val categoryState = addEditTodoViewModel.category
-    val colorState = addEditTodoViewModel.color
+    val id by addEditTodoViewModel.id
+    val titleState by addEditTodoViewModel.title
+    val categoryState by addEditTodoViewModel.category
+    val colorState by addEditTodoViewModel.color
 
-    var animatableBackgroundColor = remember {
+    val animatableBackgroundColor = remember {
         Animatable(initialValue = Color(colorState))
     }
+
+    var colorLoaded by remember { mutableStateOf(false) }
+
+    if (!colorLoaded) {
+        LaunchedEffect(key1 = colorState) {
+            colorLoaded = true
+            animatableBackgroundColor.snapTo(Color(colorState))
+        }
+    }
+
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -53,7 +63,7 @@ fun AddEditTodoScreen(
                     showDeleteDialog = true
                 },
                 onSaveClicked = {
-                    addEditTodoViewModel.saveTodo()
+                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.SaveTodo)
                     navController.navigate(Screen.TodoListScreen.route)
                 },
                 onShareClicked = {
@@ -72,7 +82,7 @@ fun AddEditTodoScreen(
                     showDeleteDialog = false
 
                     if (id != -1) {
-                        addEditTodoViewModel.deleteTodo()
+                        addEditTodoViewModel.onEvent(AddEditTodoUiEvent.DeleteTodo)
                     }
                     navController.navigate(Screen.TodoListScreen.route)
                 },
@@ -88,12 +98,12 @@ fun AddEditTodoScreen(
         ) {
             AddEditSettingsSection(
                 currentCategory = categoryState,
-                onCategorySelected = {
-                    addEditTodoViewModel.category = it
+                onCategorySelected = { selectedCategory ->
+                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.CategoryChange(selectedCategory))
                 },
                 currentColor = PastelBlue.toArgb(),
                 onColorChange = { selectedColor ->
-                    addEditTodoViewModel.color = selectedColor
+                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.ColorChange(selectedColor))
 
                     coroutineScope.launch {
                         animatableBackgroundColor.animateTo(
@@ -109,8 +119,8 @@ fun AddEditTodoScreen(
 
             TodoContent(
                 titleState = titleState,
-                onTitleChange = {
-                    addEditTodoViewModel.title = it
+                onTitleChange = { newTitle ->
+                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.TitleChange(newTitle))
                 },
                 backgroundColor = animatableBackgroundColor.value
             )
