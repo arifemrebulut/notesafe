@@ -12,7 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
-import com.appkie.notesafe.ui.components.DeleteDialog
+import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
 import com.appkie.notesafe.ui.theme.PastelBlue
 
@@ -50,15 +50,20 @@ fun AddEditTodoScreen(
         }
     ) {
         if (showDeleteDialog) {
-            DeleteDialog(
-                onDismiss = { showDeleteDialog = false },
-                onCancelClicked = { showDeleteDialog = false },
-                onDeleteClicked = {
+            CustomDialogBox(
+                dialogText = "Are you sure you want to delete this todo?",
+                leftButtonText = "Cancel",
+                onLeftButtonClicked = { showDeleteDialog = false },
+                rightButtonText = "Delete",
+                onRightButtonClicked = {
+                    showDeleteDialog = false
+
                     if (id != -1) {
                         addEditTodoViewModel.deleteTodo()
                     }
                     navController.navigate(Screen.TodoListScreen.route)
-                }
+                },
+                onDismiss = { showDeleteDialog = false }
             )
         }
 

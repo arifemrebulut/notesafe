@@ -1,5 +1,8 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -11,10 +14,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
-import com.appkie.notesafe.ui.components.DeleteDialog
+import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
-import java.text.DateFormat.getDateInstance
-import java.util.*
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddEditNoteScreen(
@@ -26,6 +28,12 @@ fun AddEditNoteScreen(
     val descriptionState = addEditNoteViewModel.description
     val categoryState = addEditNoteViewModel.category
     val colorState = addEditNoteViewModel.color
+
+    var animatableBackgroundColor = remember {
+        Animatable(initialValue = Color(colorState))
+    }
+
+    val coroutineScope = rememberCoroutineScope()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -51,21 +59,27 @@ fun AddEditNoteScreen(
         }
     ) {
         if (showDeleteDialog) {
-            DeleteDialog(
-                onDismiss = { showDeleteDialog = false },
-                onCancelClicked = { showDeleteDialog = false },
-                onDeleteClicked = {
+            CustomDialogBox(
+                dialogText = "Are you sure you want to delete this note?",
+                leftButtonText = "Cancel",
+                onLeftButtonClicked = { showDeleteDialog = false },
+                rightButtonText = "Delete",
+                onRightButtonClicked = {
+                    showDeleteDialog = false
+
                     if (id != -1) {
                         addEditNoteViewModel.deleteNote()
                     }
                     navController.navigate(Screen.NoteListScreen.route)
-                }
+                },
+                onDismiss = { showDeleteDialog = false }
             )
         }
 
         Column(
             modifier = Modifier
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .background(animatableBackgroundColor.value),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
@@ -77,6 +91,16 @@ fun AddEditNoteScreen(
                 currentColor = colorState,
                 onColorChange = { selectedColor ->
                     addEditNoteViewModel.color = selectedColor
+
+                    coroutineScope.launch {
+                        animatableBackgroundColor.animateTo(
+                            targetValue = Color(selectedColor),
+                            animationSpec = tween(
+
+                                durationMillis = 500
+                            )
+                        )
+                    }
                 }
             )
 
@@ -88,7 +112,8 @@ fun AddEditNoteScreen(
                 descriptionState = descriptionState,
                 onDescriptionChange = {
                     addEditNoteViewModel.description = it
-                }
+                },
+                backgroundColor = animatableBackgroundColor.value
             )
         }
     }
@@ -99,11 +124,13 @@ fun NoteContent(
     titleState: String,
     onTitleChange: (String) -> Unit,
     descriptionState: String,
-    onDescriptionChange: (String) -> Unit
+    onDescriptionChange: (String) -> Unit,
+    backgroundColor: Color
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .fillMaxSize()
+            .background(backgroundColor),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -121,7 +148,7 @@ fun NoteContent(
                 )
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
+                backgroundColor = backgroundColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
@@ -139,7 +166,7 @@ fun NoteContent(
                 Text(text = "Note description starts here")
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
+                backgroundColor = backgroundColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             )

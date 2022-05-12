@@ -1,12 +1,9 @@
 package com.appkie.notesafe.ui.components
 
-import android.util.Log
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -17,13 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.luminance
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.blue
-import androidx.core.graphics.green
-import androidx.core.graphics.red
 import com.appkie.notesafe.ui.theme.Black
 import com.appkie.notesafe.util.Utils
 
@@ -39,8 +30,6 @@ fun AddEditSettingsSection(
     val icon = if (expended) Icons.Outlined.ArrowDropUp else Icons.Outlined.ArrowDropDown
 
     Column {
-
-        Divider()
 
         Row(
             modifier = Modifier
@@ -134,8 +123,8 @@ fun AddEditSettingsSection(
                     )
                 }
             }
-
-            Divider()
         }
+
+        Divider()
     }
 }

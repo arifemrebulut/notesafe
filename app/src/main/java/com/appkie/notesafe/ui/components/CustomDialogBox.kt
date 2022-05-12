@@ -12,17 +12,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.appkie.notesafe.ui.theme.Black
+import com.appkie.notesafe.ui.theme.Blue
+import com.appkie.notesafe.ui.theme.NotesafeTheme
 import com.appkie.notesafe.ui.theme.White
 
 @Composable
-fun DeleteDialog(
-    onDismiss: () -> Unit,
-    onCancelClicked: () -> Unit,
-    onDeleteClicked: () -> Unit
+fun CustomDialogBox(
+    dialogText: String,
+    leftButtonText: String,
+    onLeftButtonClicked: () -> Unit,
+    rightButtonText: String,
+    onRightButtonClicked: () -> Unit,
+    onDismiss: () -> Unit
 ) {
     Dialog(
         onDismissRequest = onDismiss,
@@ -38,77 +46,59 @@ fun DeleteDialog(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(12.dp),
+                    .padding(16.dp),
                 verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .offset((-4).dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Outlined.Delete,
-                        contentDescription = "Delete Icon",
-                        tint = Color.Red,
-                        modifier = Modifier
-                            .size(26.dp)
-                    )
-                    Text(
-                        text = "Delete",
-                        style = MaterialTheme.typography.h6
-                    )
-                }
 
                 Text(
-                    text = "Are you sure you want to delete this note?",
-                    style = MaterialTheme.typography.body1,
+                    text = dialogText,
+                    style = MaterialTheme.typography.h6,
+                    textAlign = TextAlign.Center
                 )
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.Bottom
                 ) {
                     Button(
-                        onClick = onCancelClicked,
+                        onClick = onLeftButtonClicked,
                         elevation = ButtonDefaults.elevation(0.dp),
-                        border = BorderStroke(1.dp, Black),
+                        colors = ButtonDefaults.buttonColors(
+                            backgroundColor = Color.Transparent
+                        ),
                         modifier = Modifier
-                            .width(120.dp)
+                            .width(100.dp)
                     ) {
                         Text(
-                            text = "Cancel",
-                            style = MaterialTheme.typography.button,
+                            text = leftButtonText,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.Black.copy(alpha = ContentAlpha.medium)
                         )
                     }
 
+                    Spacer(modifier = Modifier.width(16.dp))
+
                     Button(
-                        onClick = onDeleteClicked,
+                        onClick = onRightButtonClicked,
                         colors = ButtonDefaults.buttonColors(
-                            backgroundColor = Color.Red,
+                            backgroundColor = Blue,
                             contentColor = White
                         ),
                         elevation = ButtonDefaults.elevation(0.dp),
                         modifier = Modifier
-                            .width(120.dp)
+                            .width(100.dp)
                     ) {
                         Text(
-                            text = "Delete",
-                            style = MaterialTheme.typography.button
+                            text = rightButtonText,
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
                         )
                     }
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun DeleteDialogPreview() {
-    DeleteDialog(onDismiss = { /*TODO*/ }, onCancelClicked = { /*TODO*/ }) {
-        
     }
 }
