@@ -1,14 +1,24 @@
 package com.appkie.notesafe.ui.screen.todo_list_screen.components
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.ExpandMore
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,31 +33,86 @@ fun TodoCard(
     todo: Todo,
     onCheckedChange: (Boolean) -> Unit
 ) {
+    var expandedState by remember { mutableStateOf(false) }
+    val rotationState by animateFloatAsState(
+        targetValue = if (expandedState) 180f else 0f
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(bottom = 8.dp),
+            .padding(bottom = 8.dp)
+            .animateContentSize(
+                animationSpec = tween(
+                    durationMillis = 300,
+                    easing = LinearOutSlowInEasing
+                )
+            ),
         backgroundColor = Color(todo.color),
         shape = Shapes.medium
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Column(
+            Modifier.padding(
+                start = 4.dp
+            )
         ) {
-            Checkbox(
-                checked = todo.checked,
-                onCheckedChange = {
-                    onCheckedChange(it)
-                }
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Checkbox(
+                    checked = todo.checked,
+                    onCheckedChange = {
+                        onCheckedChange(it)
+                    },
+                    modifier = Modifier.weight(1f)
+                )
 
-            Text(
-                text = todo.title,
-                fontSize = MaterialTheme.typography.subtitle1.fontSize,
-                textDecoration = if (todo.checked) TextDecoration.LineThrough
-                else TextDecoration.None,
-                color = if (todo.checked) Black.copy(alpha = ContentAlpha.disabled)
-                else Black.copy(alpha = ContentAlpha.high)
-            )
+                Text(
+                    text = todo.title,
+                    fontSize = MaterialTheme.typography.subtitle1.fontSize,
+                    textDecoration = if (todo.checked) TextDecoration.LineThrough
+                    else TextDecoration.None,
+                    color = if (todo.checked) Black.copy(alpha = ContentAlpha.disabled)
+                    else Black.copy(alpha = ContentAlpha.high),
+                    maxLines = if (expandedState) 4 else 1,
+                    modifier = Modifier.weight(8f)
+                )
+
+                Icon(
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .weight(1f)
+                        .alpha(ContentAlpha.medium)
+                        .rotate(rotationState)
+                        .clickable {
+                            expandedState = !expandedState
+                        },
+                    imageVector = Icons.Outlined.ExpandMore,
+                    contentDescription = "Read More Arrow"
+                )
+            }
+
+            if (expandedState) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "#${todo.category}",
+                        style = MaterialTheme.typography.subtitle2,
+                        fontWeight = FontWeight.Normal
+                    )
+
+                    Text(
+                        text = todo.creationTime,
+                        style = MaterialTheme.typography.caption
+                    )
+                }
+            }
         }
     }
 }
