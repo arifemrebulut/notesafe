@@ -7,7 +7,6 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ExpandMore
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.ui.theme.NotesafeTheme
 import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.ui.theme.Shapes
 import com.appkie.notesafe.util.Utils
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -51,7 +51,7 @@ fun NoteCard(
                     easing = LinearOutSlowInEasing
                 )
             ),
-        shape = RoundedCornerShape(4.dp),
+        shape = Shapes.medium,
         backgroundColor = Color(note.color),
         onClick = { onNoteClicked(note.id!!) }
     ) {
