@@ -31,6 +31,8 @@ fun AddEditSettingsSection(
 
     Column {
 
+        Divider()
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -124,7 +126,5 @@ fun AddEditSettingsSection(
                 }
             }
         }
-
-        Divider()
     }
 }

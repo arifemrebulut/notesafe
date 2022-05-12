@@ -1,12 +1,18 @@
 package com.appkie.notesafe.ui.screen.add_edit_todo_screen
 
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -15,6 +21,7 @@ import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
 import com.appkie.notesafe.ui.theme.PastelBlue
+import kotlinx.coroutines.launch
 
 @Composable
 fun AddEditTodoScreen(
@@ -25,6 +32,12 @@ fun AddEditTodoScreen(
     val titleState = addEditTodoViewModel.title
     val categoryState = addEditTodoViewModel.category
     val colorState = addEditTodoViewModel.color
+
+    var animatableBackgroundColor = remember {
+        Animatable(initialValue = Color(colorState))
+    }
+
+    val coroutineScope = rememberCoroutineScope()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -81,6 +94,16 @@ fun AddEditTodoScreen(
                 currentColor = PastelBlue.toArgb(),
                 onColorChange = { selectedColor ->
                     addEditTodoViewModel.color = selectedColor
+
+                    coroutineScope.launch {
+                        animatableBackgroundColor.animateTo(
+                            targetValue = Color(selectedColor),
+                            animationSpec = tween(
+
+                                durationMillis = 500
+                            )
+                        )
+                    }
                 }
             )
 
@@ -88,7 +111,8 @@ fun AddEditTodoScreen(
                 titleState = titleState,
                 onTitleChange = {
                     addEditTodoViewModel.title = it
-                }
+                },
+                backgroundColor = animatableBackgroundColor.value
             )
         }
     }
@@ -98,10 +122,14 @@ fun AddEditTodoScreen(
 fun TodoContent(
     titleState: String,
     onTitleChange: (String) -> Unit,
+    backgroundColor: Color
 ) {
     Column(
         modifier = Modifier
-            .fillMaxSize(),
+            .padding(bottom = 60.dp)
+            .clip(RoundedCornerShape(8.dp))
+            .fillMaxSize()
+            .background(backgroundColor),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -119,11 +147,23 @@ fun TodoContent(
                 )
             },
             colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = Color.White,
+                backgroundColor = backgroundColor,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent
             ),
             textStyle = MaterialTheme.typography.h6
         )
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun TodoContentPreview() {
+    TodoContent(
+            titleState = "Title",
+        onTitleChange = {
+
+        },
+        backgroundColor = PastelBlue
+    )
 }
