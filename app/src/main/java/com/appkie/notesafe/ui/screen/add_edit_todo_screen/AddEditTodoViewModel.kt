@@ -61,7 +61,6 @@ class AddEditTodoViewModel @Inject constructor(
                 title = title,
                 checked = checked,
                 category = category,
-                fav = false,
                 creationTime = getFormattedTime(),
                 color = color
             )
@@ -76,7 +75,6 @@ class AddEditTodoViewModel @Inject constructor(
                 title = title,
                 checked = checked,
                 category = category,
-                fav = false,
                 creationTime = getFormattedTime(),
                 color = color
             )

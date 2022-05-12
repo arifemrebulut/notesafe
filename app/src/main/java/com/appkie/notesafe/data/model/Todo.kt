@@ -11,7 +11,6 @@ data class Todo(
     val title: String,
     val checked: Boolean,
     val category: String,
-    val fav: Boolean,
     val color: Int,
     val creationTime: String
 )

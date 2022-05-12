@@ -47,7 +47,7 @@ class AddEditNoteViewModel @Inject constructor(
                     title = note.title
                     description = note.description
                     category = note.category
-                    //color = note.color
+                    color = note.color
                 }
             }
         }
@@ -60,7 +60,6 @@ class AddEditNoteViewModel @Inject constructor(
                 title = title,
                 description = description,
                 category = category,
-                fav = false,
                 creationTime = getFormattedTime(),
                 color = color
             )
@@ -75,7 +74,6 @@ class AddEditNoteViewModel @Inject constructor(
                 title = title,
                 description = description,
                 category = category,
-                fav = false,
                 creationTime = getFormattedTime(),
                 color = color
             )
