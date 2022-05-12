@@ -1,12 +1,13 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
 import androidx.compose.runtime.*
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.NoteRepository
-import com.appkie.notesafe.util.Utils
+import com.appkie.notesafe.ui.theme.PastelBlue
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class AddEditNoteViewModel @Inject constructor(
     var title by mutableStateOf("")
     var description by mutableStateOf("")
     var category by mutableStateOf("All")
+    var color by mutableStateOf(PastelBlue.toArgb())
 
     init {
         getNoteIdFromStateHandle()
@@ -45,6 +47,7 @@ class AddEditNoteViewModel @Inject constructor(
                     title = note.title
                     description = note.description
                     category = note.category
+                    //color = note.color
                 }
             }
         }
@@ -59,7 +62,7 @@ class AddEditNoteViewModel @Inject constructor(
                 category = category,
                 fav = false,
                 creationTime = getFormattedTime(),
-                color = 123
+                color = color
             )
             noteRepository.saveNote(note = note)
         }
@@ -74,7 +77,7 @@ class AddEditNoteViewModel @Inject constructor(
                 category = category,
                 fav = false,
                 creationTime = getFormattedTime(),
-                color = 123
+                color = color
             )
             noteRepository.deleteNote(note = note)
         }

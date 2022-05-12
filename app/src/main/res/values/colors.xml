@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue">#FF407BFF</color>
+    <color name="dark_blue">#FF1E5CE7</color>
     <color name="error_red">#FFFF6C60</color>
     <color name="info_green">#FF00C096</color>
     <color name="pastel_blue">#FFDCEAFF</color>

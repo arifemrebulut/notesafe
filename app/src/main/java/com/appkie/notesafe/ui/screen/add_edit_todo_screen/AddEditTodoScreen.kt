@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -13,6 +14,7 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.DeleteDialog
 import com.appkie.notesafe.ui.navigation.Screen
+import com.appkie.notesafe.ui.theme.PastelBlue
 
 @Composable
 fun AddEditTodoScreen(
@@ -22,6 +24,7 @@ fun AddEditTodoScreen(
     val id = addEditTodoViewModel.id
     val titleState = addEditTodoViewModel.title
     val categoryState = addEditTodoViewModel.category
+    val colorState = addEditTodoViewModel.color
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -69,6 +72,10 @@ fun AddEditTodoScreen(
                 currentCategory = categoryState,
                 onCategorySelected = {
                     addEditTodoViewModel.category = it
+                },
+                currentColor = PastelBlue.toArgb(),
+                onColorChange = { selectedColor ->
+                    addEditTodoViewModel.color = selectedColor
                 }
             )
 

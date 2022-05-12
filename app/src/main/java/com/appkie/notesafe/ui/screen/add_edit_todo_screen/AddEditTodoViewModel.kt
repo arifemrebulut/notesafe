@@ -3,11 +3,13 @@ package com.appkie.notesafe.ui.screen.add_edit_todo_screen
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.TodoRepository
+import com.appkie.notesafe.ui.theme.PastelBlue
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -25,6 +27,7 @@ class AddEditTodoViewModel @Inject constructor(
     var title by mutableStateOf("")
     var checked by mutableStateOf(false)
     var category by mutableStateOf("All")
+    var color by mutableStateOf(PastelBlue.toArgb())
 
     init {
         getTodoIdFromStateHandle()
@@ -45,6 +48,7 @@ class AddEditTodoViewModel @Inject constructor(
                 todo?.let { todo ->
                     title = todo.title
                     checked = todo.checked
+                    color = color
                 }
             }
         }
@@ -59,7 +63,7 @@ class AddEditTodoViewModel @Inject constructor(
                 category = category,
                 fav = false,
                 creationTime = getFormattedTime(),
-                color = 123
+                color = color
             )
             todoRepository.saveTodo(todo = todo)
         }
@@ -74,7 +78,7 @@ class AddEditTodoViewModel @Inject constructor(
                 category = category,
                 fav = false,
                 creationTime = getFormattedTime(),
-                color = 123
+                color = color
             )
             todoRepository.deleteTodo(todo = todo)
         }

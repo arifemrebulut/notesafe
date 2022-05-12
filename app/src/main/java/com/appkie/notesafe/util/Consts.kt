@@ -1,5 +1,8 @@
 package com.appkie.notesafe.util
 
+import androidx.compose.ui.graphics.toArgb
+import com.appkie.notesafe.ui.theme.*
+
 object Consts {
 
     const val DATABASE_NAME = "note_database"

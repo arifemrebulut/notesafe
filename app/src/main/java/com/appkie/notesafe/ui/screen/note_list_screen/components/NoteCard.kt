@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -21,13 +22,13 @@ fun NoteCard(
     onNoteClicked: (Int) -> Unit
 ) {
     Card(
-        shape = RoundedCornerShape(4.dp),
-        backgroundColor = PastelBlue,
         modifier = Modifier
             .padding(bottom = 8.dp)
             .clickable {
                 onNoteClicked(note.id!!)
-            }
+            },
+        shape = RoundedCornerShape(4.dp),
+        backgroundColor = Color(note.color),
     ) {
         Column(
             modifier = Modifier
@@ -43,7 +44,7 @@ fun NoteCard(
                 modifier = Modifier
                     .padding(vertical = 8.dp),
                 text = note.description ?: "",
-                maxLines = 3,
+                maxLines = 1,
                 style = MaterialTheme.typography.body2,
                 fontWeight = FontWeight.Normal,
                 overflow = TextOverflow.Ellipsis

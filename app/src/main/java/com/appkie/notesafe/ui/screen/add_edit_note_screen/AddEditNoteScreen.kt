@@ -25,6 +25,7 @@ fun AddEditNoteScreen(
     val titleState = addEditNoteViewModel.title
     val descriptionState = addEditNoteViewModel.description
     val categoryState = addEditNoteViewModel.category
+    val colorState = addEditNoteViewModel.color
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -72,6 +73,10 @@ fun AddEditNoteScreen(
                 currentCategory = categoryState,
                 onCategorySelected = { selectedCategory ->
                     addEditNoteViewModel.category = selectedCategory
+                },
+                currentColor = colorState,
+                onColorChange = { selectedColor ->
+                    addEditNoteViewModel.color = selectedColor
                 }
             )
 

@@ -1,8 +1,12 @@
 package com.appkie.notesafe.ui.components
 
+import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -12,16 +16,23 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
-import com.appkie.notesafe.ui.theme.PastelBlue
-import com.appkie.notesafe.ui.theme.PastelGreen
-import com.appkie.notesafe.ui.theme.PastelPurple
-import com.appkie.notesafe.ui.theme.PastelYellow
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
+import androidx.core.graphics.red
+import com.appkie.notesafe.ui.theme.Black
+import com.appkie.notesafe.util.Utils
 
 @Composable
 fun AddEditSettingsSection(
     currentCategory: String,
-    onCategorySelected: (String) -> Unit
+    onCategorySelected: (String) -> Unit,
+    currentColor: Int,
+    onColorChange: (Int) -> Unit
 ) {
 
     var expended by remember { mutableStateOf(false) }
@@ -97,41 +108,34 @@ fun AddEditSettingsSection(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.End
             ) {
-                Box(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .clip(CircleShape)
-                        .background(PastelYellow)
-                        .size(40.dp)
-                        .clickable {}
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .clip(CircleShape)
-                        .background(PastelBlue)
-                        .size(40.dp)
-                        .clickable {}
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .clip(CircleShape)
-                        .background(PastelGreen)
-                        .size(40.dp)
-                        .clickable {}
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 8.dp)
-                        .clip(CircleShape)
-                        .background(PastelPurple)
-                        .size(40.dp)
-                        .clickable {}
-                )
-            }
-        }
 
-        Divider()
+                Utils.noteColors.forEach { color ->
+
+                    val selected = currentColor == color
+
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 8.dp)
+                            .size(
+                                if (selected) 42.dp else 40.dp
+                            )
+                            .clip(CircleShape)
+                            .background(Color(color))
+                            .border(
+                                width = 2.dp,
+                                color = if (selected) {
+                                    Black.copy(alpha = 0.1f)
+                                } else Color.Transparent,
+                                shape = CircleShape
+                            )
+                            .clickable {
+                                onColorChange(color)
+                            }
+                    )
+                }
+            }
+
+            Divider()
+        }
     }
 }
