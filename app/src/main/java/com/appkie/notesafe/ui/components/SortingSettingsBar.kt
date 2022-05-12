@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -18,8 +19,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.ui.theme.Blue
+import com.appkie.notesafe.ui.theme.NotesafeTheme
 import com.appkie.notesafe.util.OrderType
 
 @Composable
@@ -46,7 +49,7 @@ fun SortingSettingsBar(
             modifier = Modifier
                 .horizontalScroll(scrollState)
                 .padding(end = 8.dp)
-                .weight(9f),
+                .weight(8.6f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
@@ -79,33 +82,41 @@ fun SortingSettingsBar(
             }
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
-        
         Row(
             modifier = Modifier
-                .weight(1f),
+                .weight(1.4f),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Divider(
                 modifier = Modifier
-                    .height(32.dp)
-                    .width(1.dp)
+                    .height(36.dp)
+                    .width(2.dp)
             )
+
+            Spacer(modifier = Modifier.width(8.dp))
 
             Column(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Icon(
-                    imageVector = Icons.Outlined.FilterList,
-                    contentDescription = null,
+                Box(
                     modifier = Modifier
-                        .clickable {
-                            sortingDropdownExpended = true
-                        }
-                        .padding(start = 8.dp)
-                )
+                        .clip(CircleShape)
+                        .background(Color.LightGray.copy(alpha = 0.3f)),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.FilterList,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable {
+                                sortingDropdownExpended = true
+                            }
+                            .padding(6.dp)
+                    )
+                }
+
                 DropdownMenu(
                     expanded = sortingDropdownExpended,
                     onDismissRequest = { sortingDropdownExpended = false }

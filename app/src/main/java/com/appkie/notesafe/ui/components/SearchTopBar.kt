@@ -30,7 +30,7 @@ fun SearchTopBar(
 
     Box(
         modifier = Modifier
-            .padding(horizontal = 12.dp, vertical = 6.dp),
+            .padding(start = 12.dp, end = 12.dp, top = 12.dp, bottom = 6.dp),
         contentAlignment = Alignment.Center
     ) {
         BasicTextField(
