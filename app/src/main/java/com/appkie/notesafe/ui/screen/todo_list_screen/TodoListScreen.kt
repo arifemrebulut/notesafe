@@ -79,7 +79,8 @@ fun TodoListScreen(
                         todo = item,
                         onCheckedChange = {
                             todoListViewModel.onEvent(TodoListUiEvent.CheckedChange(todo = item, checked = it))
-                        }
+                        },
+                        onTodoClicked = { navController.navigate(Screen.AddEditTodoScreen.route + "/${item.id}") }
                     )
                 }
             }

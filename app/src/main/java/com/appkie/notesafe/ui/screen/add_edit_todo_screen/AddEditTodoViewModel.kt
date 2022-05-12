@@ -51,7 +51,7 @@ class AddEditTodoViewModel @Inject constructor(
                 todo?.let { todo ->
                     title = todo.title
                     checked = todo.checked
-                    color = color
+                    color = todo.color
                 }
             }
         }

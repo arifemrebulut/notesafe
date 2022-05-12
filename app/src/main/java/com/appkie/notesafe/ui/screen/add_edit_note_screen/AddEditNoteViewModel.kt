@@ -19,63 +19,93 @@ class AddEditNoteViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    val TAG = "AddEditNoteViewModel"
+    private val _id = mutableStateOf(-1)
+    val id: State<Int> = _id
 
-    var id by mutableStateOf(-1)
-    var title by mutableStateOf("")
-    var description by mutableStateOf("")
-    var category by mutableStateOf("All")
-    var color by mutableStateOf(PastelBlue.toArgb())
+    private val _title = mutableStateOf("")
+    val title: State<String> = _title
+
+    private val _description = mutableStateOf("")
+    val description: State<String> = _description
+
+    private val _category = mutableStateOf("All")
+    val category: State<String> = _category
+
+    private val _color = mutableStateOf(PastelBlue.toArgb())
+    val color: State<Int> = _color
 
     init {
         getNoteIdFromStateHandle()
         getNoteById()
     }
 
+    fun onEvent(event: AddEditNoteUiEvent) {
+        when (event) {
+            is AddEditNoteUiEvent.SaveNote -> {
+                saveNote()
+            }
+            is AddEditNoteUiEvent.DeleteNote -> {
+                deleteNote()
+            }
+            is AddEditNoteUiEvent.TitleChange -> {
+                _title.value = event.title
+            }
+            is AddEditNoteUiEvent.DescriptionChange -> {
+                _description.value = event.description
+            }
+            is AddEditNoteUiEvent.CategoryChange -> {
+                _category.value = event.category
+            }
+            is AddEditNoteUiEvent.ColorChange -> {
+                _color.value = event.color
+            }
+        }
+    }
+
     private fun getNoteIdFromStateHandle() {
         savedStateHandle.get<Int>("noteId")?.let { noteId ->
-            id = noteId
+            _id.value = noteId
         }
     }
 
     private fun getNoteById() {
-        if (id != -1) {
+        if (_id.value != -1) {
             viewModelScope.launch {
-                val note : Note? = noteRepository.getNoteById(id)
+                val note : Note? = noteRepository.getNoteById(_id.value)
 
-                note?.let { note ->
-                    title = note.title
-                    description = note.description
-                    category = note.category
-                    color = note.color
+                note?.let { noteById ->
+                    _title.value = noteById.title
+                    _description.value = noteById.description
+                    _category.value = noteById.category
+                    _color.value = noteById.color
                 }
             }
         }
     }
 
-    fun saveNote() {
+    private fun saveNote() {
         viewModelScope.launch {
             val note = Note(
-                id = if(id != -1) id else null,
-                title = title.trim(),
-                description = description.trim(),
-                category = category,
+                id = if(_id.value != -1) _id.value else null,
+                title = _title.value.trim(),
+                description = _description.value.trim(),
+                category = _category.value,
                 creationTime = getFormattedTime(),
-                color = color
+                color = _color.value
             )
             noteRepository.saveNote(note = note)
         }
     }
 
-    fun deleteNote() {
+    private fun deleteNote() {
         viewModelScope.launch {
             val note = Note(
-                id = id,
-                title = title,
-                description = description,
-                category = category,
+                id = _id.value,
+                title = _title.value,
+                description = _description.value,
+                category = _category.value,
                 creationTime = getFormattedTime(),
-                color = color
+                color = _color.value
             )
             noteRepository.deleteNote(note = note)
         }

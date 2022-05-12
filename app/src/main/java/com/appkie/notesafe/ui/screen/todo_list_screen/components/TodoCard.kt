@@ -31,6 +31,7 @@ import com.appkie.notesafe.util.Utils
 @Composable
 fun TodoCard(
     todo: Todo,
+    onTodoClicked: (Int) -> Unit,
     onCheckedChange: (Boolean) -> Unit
 ) {
     var expandedState by remember { mutableStateOf(false) }
@@ -47,7 +48,10 @@ fun TodoCard(
                     durationMillis = 300,
                     easing = LinearOutSlowInEasing
                 )
-            ),
+            )
+            .clickable {
+                onTodoClicked(todo.id!!)
+            },
         backgroundColor = Color(todo.color),
         shape = Shapes.medium
     ) {
@@ -129,6 +133,7 @@ fun TodoCardPreview() {
             color = PastelBlue.toArgb(),
             creationTime = Utils.getFormattedTime()
         ),
-        onCheckedChange = {}
+        onCheckedChange = {},
+        onTodoClicked = {}
     )
 }

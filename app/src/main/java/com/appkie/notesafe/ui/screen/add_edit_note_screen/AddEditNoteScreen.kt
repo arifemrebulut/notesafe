@@ -18,7 +18,6 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.theme.Shapes
 import kotlinx.coroutines.launch
 
 @Composable
@@ -26,14 +25,23 @@ fun AddEditNoteScreen(
     navController: NavController,
     addEditNoteViewModel: AddEditNoteViewModel = hiltViewModel()
 ) {
-    val id = addEditNoteViewModel.id
-    val titleState = addEditNoteViewModel.title
-    val descriptionState = addEditNoteViewModel.description
-    val categoryState = addEditNoteViewModel.category
-    val colorState = addEditNoteViewModel.color
+    val id by addEditNoteViewModel.id
+    val titleState by addEditNoteViewModel.title
+    val descriptionState by addEditNoteViewModel.description
+    val categoryState by addEditNoteViewModel.category
+    val colorState by addEditNoteViewModel.color
 
-    var animatableBackgroundColor = remember {
+    val animatableBackgroundColor = remember {
         Animatable(initialValue = Color(colorState))
+    }
+
+    var colorLoaded by remember { mutableStateOf(false) }
+
+    if (!colorLoaded) {
+        LaunchedEffect(key1 = colorState) {
+            colorLoaded = true
+            animatableBackgroundColor.snapTo(Color(colorState))
+        }
     }
 
     val coroutineScope = rememberCoroutineScope()
@@ -52,7 +60,7 @@ fun AddEditNoteScreen(
                     showDeleteDialog = true
                 },
                 onSaveClicked = {
-                    addEditNoteViewModel.saveNote()
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.SaveNote)
                     navController.navigate(Screen.NoteListScreen.route)
                 },
                 onShareClicked = {
@@ -71,7 +79,7 @@ fun AddEditNoteScreen(
                     showDeleteDialog = false
 
                     if (id != -1) {
-                        addEditNoteViewModel.deleteNote()
+                        addEditNoteViewModel.onEvent(AddEditNoteUiEvent.DeleteNote)
                     }
                     navController.navigate(Screen.NoteListScreen.route)
                 },
@@ -88,32 +96,31 @@ fun AddEditNoteScreen(
             AddEditSettingsSection(
                 currentCategory = categoryState,
                 onCategorySelected = { selectedCategory ->
-                    addEditNoteViewModel.category = selectedCategory
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.CategoryChange(selectedCategory))
                 },
                 currentColor = colorState,
                 onColorChange = { selectedColor ->
-                    addEditNoteViewModel.color = selectedColor
-
                     coroutineScope.launch {
                         animatableBackgroundColor.animateTo(
                             targetValue = Color(selectedColor),
                             animationSpec = tween(
-
                                 durationMillis = 500
                             )
                         )
                     }
+
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.ColorChange(selectedColor))
                 }
             )
 
             NoteContent(
                 titleState = titleState,
-                onTitleChange = {
-                    addEditNoteViewModel.title = it
+                onTitleChange = { newTitle ->
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.TitleChange(newTitle))
                 },
                 descriptionState = descriptionState,
-                onDescriptionChange = {
-                    addEditNoteViewModel.description = it
+                onDescriptionChange = { newDescription ->
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.DescriptionChange(newDescription))
                 },
                 backgroundColor = animatableBackgroundColor.value
             )
