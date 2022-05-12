@@ -101,7 +101,7 @@ fun AddEditTodoScreen(
                 onCategorySelected = { selectedCategory ->
                     addEditTodoViewModel.onEvent(AddEditTodoUiEvent.CategoryChange(selectedCategory))
                 },
-                currentColor = PastelBlue.toArgb(),
+                currentColor = colorState,
                 onColorChange = { selectedColor ->
                     addEditTodoViewModel.onEvent(AddEditTodoUiEvent.ColorChange(selectedColor))
 
