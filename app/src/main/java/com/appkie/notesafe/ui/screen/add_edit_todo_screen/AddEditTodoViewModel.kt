@@ -58,7 +58,7 @@ class AddEditTodoViewModel @Inject constructor(
         viewModelScope.launch {
             val todo = Todo(
                 id = if(id != -1) id else null,
-                title = title,
+                title = title.trim(),
                 checked = checked,
                 category = category,
                 creationTime = getFormattedTime(),

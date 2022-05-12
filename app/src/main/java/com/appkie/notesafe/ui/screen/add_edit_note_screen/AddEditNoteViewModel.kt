@@ -57,8 +57,8 @@ class AddEditNoteViewModel @Inject constructor(
         viewModelScope.launch {
             val note = Note(
                 id = if(id != -1) id else null,
-                title = title,
-                description = description,
+                title = title.trim(),
+                description = description.trim(),
                 category = category,
                 creationTime = getFormattedTime(),
                 color = color
