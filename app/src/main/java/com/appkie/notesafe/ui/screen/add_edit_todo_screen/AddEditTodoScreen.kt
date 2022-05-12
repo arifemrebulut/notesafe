@@ -102,7 +102,7 @@ fun TodoContent(
                 .fillMaxWidth(),
             placeholder = {
                 Text(
-                    text = "Title",
+                    text = "Todo...",
                     style = MaterialTheme.typography.h6
                 )
             },
