@@ -3,6 +3,7 @@ package com.appkie.notesafe.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val Blue = Color(0xFF407BFF)
+val DarkBlue = Color(0xFF1E5CE7)
 val ErrorRed = Color(0xFFFF6C60)
 val InfoGreen = Color(0xFF00C096)
 
