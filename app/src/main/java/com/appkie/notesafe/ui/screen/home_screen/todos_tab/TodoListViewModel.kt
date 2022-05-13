@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.todo_list_screen
+package com.appkie.notesafe.ui.screen.home_screen.todos_tab
 
 import android.util.Log
 import androidx.compose.runtime.State
@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.util.OrderType
-import com.appkie.notesafe.util.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat

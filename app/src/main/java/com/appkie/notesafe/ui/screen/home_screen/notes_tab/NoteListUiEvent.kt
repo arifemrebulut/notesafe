@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.note_list_screen
+package com.appkie.notesafe.ui.screen.home_screen.notes_tab
 
 import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.util.OrderType

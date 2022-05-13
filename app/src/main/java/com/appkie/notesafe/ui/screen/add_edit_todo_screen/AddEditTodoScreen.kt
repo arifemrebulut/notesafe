@@ -65,7 +65,7 @@ fun AddEditTodoScreen(
                 onSaveClicked = {
                     if (titleState.isNotBlank()) {
                         addEditTodoViewModel.onEvent(AddEditTodoUiEvent.SaveTodo)
-                        navController.navigate(Screen.TodoListScreen.route)
+                        navController.navigate(Screen.HomeScreen.route + "/1")
                     } else {
                         coroutineScope.launch {
                             scaffoldState.snackbarHostState.showSnackbar(
@@ -93,7 +93,7 @@ fun AddEditTodoScreen(
                     if (id != -1) {
                         addEditTodoViewModel.onEvent(AddEditTodoUiEvent.DeleteTodo)
                     }
-                    navController.navigate(Screen.TodoListScreen.route)
+                    navController.navigate(Screen.HomeScreen.route + "/1")
                 },
                 onDismiss = { showDeleteDialog = false }
             )

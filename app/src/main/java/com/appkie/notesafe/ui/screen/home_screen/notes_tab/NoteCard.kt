@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.note_list_screen.components
+package com.appkie.notesafe.ui.screen.home_screen.notes_tab
 
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.LinearOutSlowInEasing

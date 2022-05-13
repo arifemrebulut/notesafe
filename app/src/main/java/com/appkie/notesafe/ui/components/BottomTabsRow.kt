@@ -24,8 +24,7 @@ import com.appkie.notesafe.ui.theme.WhiteVariant
 @Composable
 fun BottomTabsRow(
     selectedTabIndex: Int,
-    onNotesClicked: () -> Unit,
-    onTodosClicked: () -> Unit
+    onTabSelected: (Int) -> Unit
 ) {
     val tabs = listOf(
         BottomTabItem(
@@ -50,13 +49,10 @@ fun BottomTabsRow(
 
             Column(
                 modifier = Modifier
-                    .clickable {
-                        if (index == 0) {
-                            onNotesClicked()
-                        } else {
-                            onTodosClicked()
-                        }
-                    }
+                    .selectable(
+                        selected = selected,
+                        onClick = { onTabSelected(index) }
+                    )
                     .padding(vertical = 8.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

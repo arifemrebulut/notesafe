@@ -65,7 +65,7 @@ fun AddEditNoteScreen(
                 onSaveClicked = {
                     if (titleState.isNotBlank()) {
                         addEditNoteViewModel.onEvent(AddEditNoteUiEvent.SaveNote)
-                        navController.navigate(Screen.NoteListScreen.route)
+                        navController.navigate(Screen.HomeScreen.route + "/0")
                     } else {
                         coroutineScope.launch {
                             scaffoldState.snackbarHostState.showSnackbar(
@@ -93,7 +93,7 @@ fun AddEditNoteScreen(
                     if (id != -1) {
                         addEditNoteViewModel.onEvent(AddEditNoteUiEvent.DeleteNote)
                     }
-                    navController.navigate(Screen.NoteListScreen.route)
+                    navController.navigate(Screen.HomeScreen.route + "/0")
                 },
                 onDismiss = { showDeleteDialog = false }
             )

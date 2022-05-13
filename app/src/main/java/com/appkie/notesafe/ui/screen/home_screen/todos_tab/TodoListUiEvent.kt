@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.todo_list_screen
+package com.appkie.notesafe.ui.screen.home_screen.todos_tab
 
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.util.OrderType

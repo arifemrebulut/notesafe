@@ -1,4 +1,4 @@
-package com.appkie.notesafe.ui.screen.note_list_screen
+package com.appkie.notesafe.ui.screen.home_screen.notes_tab
 
 import android.util.Log
 import androidx.compose.runtime.State
@@ -10,7 +10,6 @@ import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
