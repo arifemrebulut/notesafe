@@ -15,10 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.appkie.notesafe.ui.components.AddCategoryDialog
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
+import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteUiEvent
 import com.appkie.notesafe.ui.theme.PastelBlue
 import kotlinx.coroutines.launch
 
@@ -49,6 +51,7 @@ fun AddEditTodoScreen(
     val scaffoldState = rememberScaffoldState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showAddCategoryDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier
@@ -99,6 +102,16 @@ fun AddEditTodoScreen(
             )
         }
 
+        if (showAddCategoryDialog) {
+            AddCategoryDialog(
+                onAddClicked = { newCategory ->
+                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.AddNewCategory(newCategory))
+                    showAddCategoryDialog = false
+                },
+                onDismiss = { showAddCategoryDialog = false },
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -125,7 +138,9 @@ fun AddEditTodoScreen(
                         )
                     }
                 },
-                onAddCategoryClicked = {}
+                onAddCategoryClicked = {
+                    showAddCategoryDialog = true
+                }
             )
 
             TodoContent(

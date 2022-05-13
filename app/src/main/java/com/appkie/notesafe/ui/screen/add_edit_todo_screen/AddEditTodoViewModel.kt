@@ -6,7 +6,9 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.data.model.Todo
+import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
 import com.appkie.notesafe.util.Utils.getFormattedTime
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddEditTodoViewModel @Inject constructor(
     private val todoRepository: TodoRepository,
+    private val categoryRepository: CategoryRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -58,6 +61,9 @@ class AddEditTodoViewModel @Inject constructor(
             }
             is AddEditTodoUiEvent.ColorChange -> {
                 _color.value = event.color
+            }
+            is AddEditTodoUiEvent.AddNewCategory -> {
+                addNewCategory(event.categoryName)
             }
         }
     }
@@ -108,6 +114,15 @@ class AddEditTodoViewModel @Inject constructor(
                 color = _color.value
             )
             todoRepository.deleteTodo(todo = todo)
+        }
+    }
+
+    private fun addNewCategory(categoryName: String) {
+        viewModelScope.launch {
+            val category = Category(
+                name = categoryName.uppercase()
+            )
+            categoryRepository.addCategory(category)
         }
     }
 }

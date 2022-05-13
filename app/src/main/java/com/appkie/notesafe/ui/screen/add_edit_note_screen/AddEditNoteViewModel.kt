@@ -2,6 +2,7 @@ package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.toUpperCase
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -133,7 +135,7 @@ class AddEditNoteViewModel @Inject constructor(
     private fun addNewCategory(categoryName: String) {
         viewModelScope.launch {
             val category = Category(
-                name = categoryName
+                name = categoryName.uppercase()
             )
             categoryRepository.addCategory(category)
         }
