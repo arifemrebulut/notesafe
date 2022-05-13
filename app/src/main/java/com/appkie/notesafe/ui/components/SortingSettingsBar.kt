@@ -1,6 +1,5 @@
 package com.appkie.notesafe.ui.components
 
-import android.util.Log
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
@@ -19,23 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.ui.theme.Blue
-import com.appkie.notesafe.ui.theme.NotesafeTheme
 import com.appkie.notesafe.util.OrderType
 
 @Composable
 fun SortingSettingsBar(
     modifier: Modifier = Modifier,
+    categoryList: List<Category>,
     onCategoryChange: (String) -> Unit,
     onSortingFilterChange: (OrderType) -> Unit
 ) {
-    val TAG = "SortingSettingsBar"
 
     val scrollState = rememberScrollState()
-
-    val folders = listOf("All", "School", "Work", "Home", "Shopping", "Coding", "Kotlin", "Android")
 
     var selectedFolderIndex by remember { mutableStateOf(0) }
     var sortingDropdownExpended by remember { mutableStateOf(false) }
@@ -53,11 +49,11 @@ fun SortingSettingsBar(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            folders.forEachIndexed { index, item ->
+            categoryList.forEachIndexed { index, item ->
                 val selected = selectedFolderIndex == index
 
                 Text(
-                    text = item,
+                    text = item.name,
                     modifier = Modifier
                         .clip(RoundedCornerShape(percent = 30))
                         .border(
@@ -72,8 +68,7 @@ fun SortingSettingsBar(
                             selected = selected,
                             onClick = {
                                 selectedFolderIndex = index
-                                onCategoryChange(item)
-                                Log.d(TAG, "SortingSettingsBar: $item")
+                                onCategoryChange(item.name)
                             }
                         ),
                     fontWeight = FontWeight.Medium,
@@ -142,9 +137,3 @@ fun SortingSettingsBar(
         }
     }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun SortingSettingsBarPreview() {
-//    SortingSettingsBar()
-//}

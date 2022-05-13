@@ -5,8 +5,10 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Add
 import androidx.compose.material.icons.outlined.ArrowDropDown
 import androidx.compose.material.icons.outlined.ArrowDropUp
 import androidx.compose.runtime.*
@@ -14,16 +16,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.appkie.notesafe.ui.theme.Black
+import com.appkie.notesafe.data.model.Category
+import com.appkie.notesafe.ui.theme.*
 import com.appkie.notesafe.util.Utils
 
 @Composable
 fun AddEditSettingsSection(
+    categoryList: List<Category>,
     currentCategory: String,
     onCategorySelected: (String) -> Unit,
     currentColor: Int,
-    onColorChange: (Int) -> Unit
+    onColorChange: (Int) -> Unit,
+    onAddCategoryClicked: () -> Unit
 ) {
 
     var expended by remember { mutableStateOf(false) }
@@ -64,32 +70,47 @@ fun AddEditSettingsSection(
                     expanded = expended,
                     onDismissRequest = { expended = false }
                 ) {
-                    DropdownMenuItem(
-                        onClick = {
-                            expended = false
-                            onCategorySelected("All")
+
+                    categoryList.forEach { category ->
+                        DropdownMenuItem(
+                            onClick = {
+                                expended = false
+                                onCategorySelected(category.name)
+                            }
+                        ) {
+                            Text(
+                                text = category.name,
+                                style = MaterialTheme.typography.subtitle1
+                            )
                         }
-                    ) {
-                        Text(text = "All")
                     }
-
                     DropdownMenuItem(
-                        onClick = {
-                            expended = false
-                            onCategorySelected("Work")
-                        }
+                        onClick =  onAddCategoryClicked,
                     ) {
-                        Text(text = "Work")
-                    }
+                        Row(
+                            modifier = Modifier
+                                .width(88.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(Color.LightGray.copy(alpha = 0.25f))
+                                .padding(all = 8.dp)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Add,
+                                contentDescription = "Add New Category",
+                                tint = White,
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .background(Blue)
+                            )
 
-                    DropdownMenuItem(
-                        onClick = {
-                            expended = false
-                            onCategorySelected("School")
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            Text(
+                                text = "New",
+                                fontWeight = FontWeight.Medium,
+                                fontSize = MaterialTheme.typography.subtitle1.fontSize
+                            )
                         }
-                    ) {
-
-                        Text(text = "School")
                     }
                 }
             }

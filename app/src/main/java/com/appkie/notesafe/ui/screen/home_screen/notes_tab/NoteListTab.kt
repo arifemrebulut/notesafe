@@ -20,6 +20,7 @@ fun NoteListScreen(
 ) {
 
     val notes by noteListViewModel.allNotes
+    val categoryList by noteListViewModel.categoryList
     val searchedNotes by noteListViewModel.searchedNotes
     val searching = noteListViewModel.searchTextState.value.isNotBlank()
 
@@ -32,6 +33,7 @@ fun NoteListScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp),
+            categoryList = categoryList,
             onCategoryChange = {
                 noteListViewModel.onEvent(NoteListUiEvent.ChangeCategory(it))
             },

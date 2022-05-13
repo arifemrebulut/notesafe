@@ -8,4 +8,5 @@ sealed class AddEditNoteUiEvent {
     data class DescriptionChange(val description: String) : AddEditNoteUiEvent()
     data class CategoryChange(val category: String) : AddEditNoteUiEvent()
     data class ColorChange(val color: Int) : AddEditNoteUiEvent()
+    data class AddNewCategory(val categoryName: String) : AddEditNoteUiEvent()
 }

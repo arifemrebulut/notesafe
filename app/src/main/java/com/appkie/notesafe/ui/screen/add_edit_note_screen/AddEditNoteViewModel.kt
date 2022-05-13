@@ -5,18 +5,22 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AddEditNoteViewModel @Inject constructor(
     private val noteRepository: NoteRepository,
-    private val savedStateHandle: SavedStateHandle
+    private val categoryRepository: CategoryRepository,
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _id = mutableStateOf(-1)
@@ -31,12 +35,16 @@ class AddEditNoteViewModel @Inject constructor(
     private val _category = mutableStateOf("All")
     val category: State<String> = _category
 
+    private val _categoryList = mutableStateOf<List<Category>>(emptyList())
+    val categoryList: State<List<Category>> = _categoryList
+
     private val _color = mutableStateOf(PastelBlue.toArgb())
     val color: State<Int> = _color
 
     init {
         getNoteIdFromStateHandle()
         getNoteById()
+        getCategoryList()
     }
 
     fun onEvent(event: AddEditNoteUiEvent) {
@@ -58,6 +66,9 @@ class AddEditNoteViewModel @Inject constructor(
             }
             is AddEditNoteUiEvent.ColorChange -> {
                 _color.value = event.color
+            }
+            is AddEditNoteUiEvent.AddNewCategory -> {
+                addNewCategory(event.categoryName)
             }
         }
     }
@@ -108,6 +119,23 @@ class AddEditNoteViewModel @Inject constructor(
                 color = _color.value
             )
             noteRepository.deleteNote(note = note)
+        }
+    }
+
+    private fun getCategoryList() {
+        viewModelScope.launch {
+            categoryRepository.getAllCategories().collect {
+                _categoryList.value = it
+            }
+        }
+    }
+
+    private fun addNewCategory(categoryName: String) {
+        viewModelScope.launch {
+            val category = Category(
+                name = categoryName
+            )
+            categoryRepository.addCategory(category)
         }
     }
 }

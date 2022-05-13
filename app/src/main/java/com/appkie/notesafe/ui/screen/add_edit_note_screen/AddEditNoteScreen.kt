@@ -1,6 +1,5 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
-import android.util.Log
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -15,6 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.appkie.notesafe.ui.components.AddCategoryDialog
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
@@ -30,6 +30,7 @@ fun AddEditNoteScreen(
     val titleState by addEditNoteViewModel.title
     val descriptionState by addEditNoteViewModel.description
     val categoryState by addEditNoteViewModel.category
+    val categoryList by addEditNoteViewModel.categoryList
     val colorState by addEditNoteViewModel.color
 
     val animatableBackgroundColor = remember {
@@ -49,6 +50,7 @@ fun AddEditNoteScreen(
     val coroutineScope = rememberCoroutineScope()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showAddCategoryDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier
@@ -99,6 +101,16 @@ fun AddEditNoteScreen(
             )
         }
 
+        if (showAddCategoryDialog) {
+            AddCategoryDialog(
+                onAddClicked = { newCategory ->
+                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.AddNewCategory(newCategory))
+                    showAddCategoryDialog = false
+                },
+                onDismiss = { showAddCategoryDialog = false },
+            )
+        }
+
         Column(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -106,6 +118,7 @@ fun AddEditNoteScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AddEditSettingsSection(
+                categoryList = categoryList,
                 currentCategory = categoryState,
                 onCategorySelected = { selectedCategory ->
                     addEditNoteViewModel.onEvent(AddEditNoteUiEvent.CategoryChange(selectedCategory))
@@ -122,6 +135,9 @@ fun AddEditNoteScreen(
                     }
 
                     addEditNoteViewModel.onEvent(AddEditNoteUiEvent.ColorChange(selectedColor))
+                },
+                onAddCategoryClicked = {
+                    showAddCategoryDialog = true
                 }
             )
 

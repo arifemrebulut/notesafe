@@ -5,7 +5,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NoteListViewModel @Inject constructor(
     private val noteRepository: NoteRepository,
+    private val categoryRepository: CategoryRepository,
 ) : ViewModel() {
 
     private val TAG = "NoteListViewModel"
@@ -30,11 +33,16 @@ class NoteListViewModel @Inject constructor(
     private val _searchTextState = mutableStateOf("")
     val searchTextState: State<String> = _searchTextState
 
+    private val _categoryList = mutableStateOf<List<Category>>(emptyList())
+    val categoryList: State<List<Category>> = _categoryList
+
     private var currentCategory: String = "All"
     private var currentOrderType: OrderType = OrderType.NEWEST
 
+
     init {
         getAllNotes()
+        getCategoryList()
     }
 
     fun onEvent(event: NoteListUiEvent) {
@@ -69,6 +77,14 @@ class NoteListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "getAllNotes: $e")
+        }
+    }
+
+    private fun getCategoryList() {
+        viewModelScope.launch {
+            categoryRepository.getAllCategories().collect {
+                _categoryList.value = it
+            }
         }
     }
 

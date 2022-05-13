@@ -106,6 +106,7 @@ fun AddEditTodoScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AddEditSettingsSection(
+                categoryList = emptyList(),
                 currentCategory = categoryState,
                 onCategorySelected = { selectedCategory ->
                     addEditTodoViewModel.onEvent(AddEditTodoUiEvent.CategoryChange(selectedCategory))
@@ -123,7 +124,8 @@ fun AddEditTodoScreen(
                             )
                         )
                     }
-                }
+                },
+                onAddCategoryClicked = {}
             )
 
             TodoContent(
