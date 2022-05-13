@@ -3,6 +3,7 @@ package com.appkie.notesafe.di
 import android.app.Application
 import androidx.room.Room
 import com.appkie.notesafe.data.NoteDatabase
+import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.util.Consts.DATABASE_NAME
@@ -37,5 +38,11 @@ object AppModule {
     @Singleton
     fun provideTodoRepository(database: NoteDatabase): TodoRepository {
         return TodoRepository(database.todoDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryRepository(database: NoteDatabase): CategoryRepository {
+        return CategoryRepository(database.categoryDao)
     }
 }
