@@ -32,6 +32,7 @@ fun AddEditTodoScreen(
     val id by addEditTodoViewModel.id
     val titleState by addEditTodoViewModel.title
     val categoryState by addEditTodoViewModel.category
+    val categoryList by addEditTodoViewModel.categoryList
     val colorState by addEditTodoViewModel.color
 
     val animatableBackgroundColor = remember {
@@ -119,7 +120,7 @@ fun AddEditTodoScreen(
             verticalArrangement = Arrangement.Top
         ) {
             AddEditSettingsSection(
-                categoryList = emptyList(),
+                categoryList = categoryList,
                 currentCategory = categoryState,
                 onCategorySelected = { selectedCategory ->
                     addEditTodoViewModel.onEvent(AddEditTodoUiEvent.CategoryChange(selectedCategory))

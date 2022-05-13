@@ -3,6 +3,7 @@ package com.appkie.notesafe.ui.screen.add_edit_todo_screen
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.capitalize
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,7 @@ import com.appkie.notesafe.ui.theme.PastelBlue
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,6 +34,9 @@ class AddEditTodoViewModel @Inject constructor(
     private val _category = mutableStateOf("All")
     val category: State<String> = _category
 
+    private val _categoryList = mutableStateOf<List<Category>>(emptyList())
+    val categoryList: State<List<Category>> = _categoryList
+
     private val _color = mutableStateOf(PastelBlue.toArgb())
     val color: State<Int> = _color
 
@@ -40,6 +45,7 @@ class AddEditTodoViewModel @Inject constructor(
     init {
         getTodoIdFromStateHandle()
         getTodoById()
+        getCategoryList()
     }
 
     fun onEvent(event: AddEditTodoUiEvent) {
@@ -117,10 +123,18 @@ class AddEditTodoViewModel @Inject constructor(
         }
     }
 
+    private fun getCategoryList() {
+        viewModelScope.launch {
+            categoryRepository.getAllCategories().collect {
+                _categoryList.value = it
+            }
+        }
+    }
+
     private fun addNewCategory(categoryName: String) {
         viewModelScope.launch {
             val category = Category(
-                name = categoryName.uppercase()
+                name = categoryName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
             )
             categoryRepository.addCategory(category)
         }
