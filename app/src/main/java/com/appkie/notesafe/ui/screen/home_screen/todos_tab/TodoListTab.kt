@@ -23,6 +23,7 @@ fun TodoListScreen(
 ) {
 
     val todos by todoListViewModel.allTodos
+    val categoryList by todoListViewModel.categoryList
     val searchedTodos by todoListViewModel.searchedTodos
     val searching = todoListViewModel.searchTextState.value.isNotBlank()
 
@@ -35,6 +36,7 @@ fun TodoListScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(bottom = 12.dp),
+            categoryList = categoryList,
             onCategoryChange = {
                 todoListViewModel.onEvent(TodoListUiEvent.ChangeCategory(it))
             },

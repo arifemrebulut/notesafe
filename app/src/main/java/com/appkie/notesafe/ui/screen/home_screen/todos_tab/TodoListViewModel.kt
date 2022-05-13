@@ -5,7 +5,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.data.model.Todo
+import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.util.OrderType
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,13 +18,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TodoListViewModel @Inject constructor(
-    private val todoRepository: TodoRepository
+    private val todoRepository: TodoRepository,
+    private val categoryRepository: CategoryRepository
 ) : ViewModel() {
 
     private val TAG = "TodoListViewModel"
 
     private val _allTodos = mutableStateOf<List<Todo>>(emptyList())
     val allTodos: State<List<Todo>> = _allTodos
+
+    private val _categoryList = mutableStateOf<List<Category>>(emptyList())
+    val categoryList: State<List<Category>> = _categoryList
 
     private val _searchedTodos = mutableStateOf<List<Todo>>(emptyList())
     val searchedTodos: State<List<Todo>> = _searchedTodos
@@ -35,6 +41,7 @@ class TodoListViewModel @Inject constructor(
 
     init {
         getAllTodos()
+        getCategoryList()
     }
 
     fun onEvent(event: TodoListUiEvent) {
@@ -71,6 +78,14 @@ class TodoListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "getAllTodos: $e")
+        }
+    }
+
+    private fun getCategoryList() {
+        viewModelScope.launch {
+            categoryRepository.getAllCategories().collect {
+                _categoryList.value = it
+            }
         }
     }
 
