@@ -11,7 +11,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,7 +19,6 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteUiEvent
 import com.appkie.notesafe.ui.theme.PastelBlue
 import kotlinx.coroutines.launch
 
@@ -46,7 +44,6 @@ fun AddEditTodoScreen(
             animatableBackgroundColor.snapTo(Color(colorState))
         }
     }
-
 
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
@@ -148,7 +145,6 @@ fun TodoContent(
 ) {
     Column(
         modifier = Modifier
-            .padding(bottom = 60.dp)
             .clip(RoundedCornerShape(8.dp))
             .fillMaxSize()
             .background(backgroundColor),

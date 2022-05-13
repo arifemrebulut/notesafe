@@ -50,9 +50,6 @@ fun AddEditNoteScreen(
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
-    val currentScreenRoute = navController.currentBackStackEntry?.destination?.route
-    Log.d("AddEditNoteScreen", "AddEditNoteScreen: $currentScreenRoute")
-
     Scaffold(
         modifier = Modifier
             .padding(8.dp),
@@ -153,7 +150,6 @@ fun NoteContent(
 ) {
     Column(
         modifier = Modifier
-            .padding(bottom = 60.dp)
             .clip(RoundedCornerShape(8.dp))
             .fillMaxSize()
             .background(backgroundColor),
