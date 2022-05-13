@@ -135,7 +135,7 @@ class AddEditNoteViewModel @Inject constructor(
     private fun addNewCategory(categoryName: String) {
         viewModelScope.launch {
             val category = Category(
-                name = categoryName.uppercase()
+                name = categoryName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
             )
             categoryRepository.addCategory(category)
         }
