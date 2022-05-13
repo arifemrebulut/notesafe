@@ -24,7 +24,7 @@ object AppModule {
             application,
             NoteDatabase::class.java,
             DATABASE_NAME)
-            .fallbackToDestructiveMigration()
+            .createFromAsset("database/note_database.db")
             .build()
     }
 
