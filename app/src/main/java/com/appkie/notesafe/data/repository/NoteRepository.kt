@@ -1,6 +1,6 @@
 package com.appkie.notesafe.data.repository
 
-import com.appkie.notesafe.data.NoteDao
+import com.appkie.notesafe.data.dao.NoteDao
 import com.appkie.notesafe.data.model.Note
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

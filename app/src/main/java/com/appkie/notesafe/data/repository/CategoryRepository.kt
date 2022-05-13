@@ -1,6 +1,6 @@
 package com.appkie.notesafe.data.repository
 
-import com.appkie.notesafe.data.CategoryDao
+import com.appkie.notesafe.data.dao.CategoryDao
 import com.appkie.notesafe.data.model.Category
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

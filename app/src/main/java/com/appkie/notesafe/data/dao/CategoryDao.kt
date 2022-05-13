@@ -1,4 +1,4 @@
-package com.appkie.notesafe.data
+package com.appkie.notesafe.data.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
