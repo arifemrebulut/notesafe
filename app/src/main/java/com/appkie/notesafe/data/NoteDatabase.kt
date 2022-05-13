@@ -15,8 +15,8 @@ import com.appkie.notesafe.data.model.Todo
         Todo::class,
         Category::class
     ],
-    version = 5,
-    exportSchema = false
+    version = 1,
+    exportSchema = true
 )
 abstract class NoteDatabase : RoomDatabase() {
 
