@@ -1,6 +1,7 @@
 package com.appkie.notesafe.ui.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ContentAlpha
@@ -23,7 +24,8 @@ import com.appkie.notesafe.ui.theme.WhiteVariant
 @Composable
 fun BottomTabsRow(
     selectedTabIndex: Int,
-    onTabSelected: (Int) -> Unit
+    onNotesClicked: () -> Unit,
+    onTodosClicked: () -> Unit
 ) {
     val tabs = listOf(
         BottomTabItem(
@@ -48,10 +50,13 @@ fun BottomTabsRow(
 
             Column(
                 modifier = Modifier
-                    .selectable(
-                        selected = selected,
-                        onClick = { onTabSelected(index) }
-                    )
+                    .clickable {
+                        if (index == 0) {
+                            onNotesClicked()
+                        } else {
+                            onTodosClicked()
+                        }
+                    }
                     .padding(vertical = 8.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally

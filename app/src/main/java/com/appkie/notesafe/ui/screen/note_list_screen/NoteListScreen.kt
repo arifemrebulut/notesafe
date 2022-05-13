@@ -10,14 +10,14 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.data.model.Note
+import com.appkie.notesafe.ui.components.BottomTabsRow
 import com.appkie.notesafe.ui.components.SearchTopBar
 import com.appkie.notesafe.ui.components.SortingSettingsBar
 import com.appkie.notesafe.ui.navigation.Screen
@@ -33,6 +33,8 @@ fun NoteListScreen(
     val searchedNotes by noteListViewModel.searchedNotes
     val searching = noteListViewModel.searchTextState.value.isNotBlank()
 
+    var selectedTabIndex by remember { mutableStateOf(0) }
+
     Scaffold(
         topBar = {
             SearchTopBar(
@@ -41,12 +43,18 @@ fun NoteListScreen(
                 },
             )
         },
+        bottomBar = {
+            BottomTabsRow(
+                selectedTabIndex = selectedTabIndex,
+                onNotesClicked = {},
+                onTodosClicked = { navController.navigate(Screen.TodoListScreen.route) }
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate(Screen.AddEditNoteScreen.route + "/-1")
-                },
-                modifier = Modifier.offset(y = (-56).dp)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,

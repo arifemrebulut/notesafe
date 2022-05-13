@@ -1,5 +1,6 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
+import android.util.Log
 import androidx.compose.animation.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
@@ -44,13 +45,18 @@ fun AddEditNoteScreen(
         }
     }
 
+    val scaffoldState = rememberScaffoldState()
     val coroutineScope = rememberCoroutineScope()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
+    val currentScreenRoute = navController.currentBackStackEntry?.destination?.route
+    Log.d("AddEditNoteScreen", "AddEditNoteScreen: $currentScreenRoute")
+
     Scaffold(
         modifier = Modifier
             .padding(8.dp),
+        scaffoldState = scaffoldState,
         topBar = {
             AddEditTopBar(
                 onBackClicked = {
@@ -60,8 +66,17 @@ fun AddEditNoteScreen(
                     showDeleteDialog = true
                 },
                 onSaveClicked = {
-                    addEditNoteViewModel.onEvent(AddEditNoteUiEvent.SaveNote)
-                    navController.navigate(Screen.NoteListScreen.route)
+                    if (titleState.isNotBlank()) {
+                        addEditNoteViewModel.onEvent(AddEditNoteUiEvent.SaveNote)
+                        navController.navigate(Screen.NoteListScreen.route)
+                    } else {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = "Title cannot be empty!",
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
                 },
                 onShareClicked = {
 

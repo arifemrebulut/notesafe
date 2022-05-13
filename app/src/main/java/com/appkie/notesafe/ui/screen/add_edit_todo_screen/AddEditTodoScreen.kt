@@ -20,6 +20,7 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
+import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteUiEvent
 import com.appkie.notesafe.ui.theme.PastelBlue
 import kotlinx.coroutines.launch
 
@@ -48,12 +49,14 @@ fun AddEditTodoScreen(
 
 
     val coroutineScope = rememberCoroutineScope()
+    val scaffoldState = rememberScaffoldState()
 
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Scaffold(
         modifier = Modifier
             .padding(8.dp),
+        scaffoldState = scaffoldState,
         topBar = {
             AddEditTopBar(
                 onBackClicked = {
@@ -63,8 +66,17 @@ fun AddEditTodoScreen(
                     showDeleteDialog = true
                 },
                 onSaveClicked = {
-                    addEditTodoViewModel.onEvent(AddEditTodoUiEvent.SaveTodo)
-                    navController.navigate(Screen.TodoListScreen.route)
+                    if (titleState.isNotBlank()) {
+                        addEditTodoViewModel.onEvent(AddEditTodoUiEvent.SaveTodo)
+                        navController.navigate(Screen.TodoListScreen.route)
+                    } else {
+                        coroutineScope.launch {
+                            scaffoldState.snackbarHostState.showSnackbar(
+                                message = "Todo cannot be empty!",
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
                 },
                 onShareClicked = {
 

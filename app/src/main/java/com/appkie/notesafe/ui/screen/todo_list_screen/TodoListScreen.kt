@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.appkie.notesafe.ui.components.BottomTabsRow
 import com.appkie.notesafe.ui.components.SearchTopBar
 import com.appkie.notesafe.ui.components.SortingSettingsBar
 import com.appkie.notesafe.ui.navigation.Screen
@@ -29,6 +30,8 @@ fun TodoListScreen(
     val searchedTodos by todoListViewModel.searchedTodos
     val searching = todoListViewModel.searchTextState.value.isNotBlank()
 
+    var selectedTabIndex by remember { mutableStateOf(1) }
+
     Scaffold(
         topBar = {
             SearchTopBar(
@@ -37,12 +40,18 @@ fun TodoListScreen(
                 }
             )
         },
+        bottomBar = {
+            BottomTabsRow(
+                selectedTabIndex = selectedTabIndex,
+                onNotesClicked = { navController.navigate(Screen.NoteListScreen.route) },
+                onTodosClicked = {}
+            )
+        },
         floatingActionButton = {
             FloatingActionButton(
                 onClick = {
                     navController.navigate(Screen.AddEditTodoScreen.route + "/-1")
-                },
-                modifier = Modifier.offset(y = (-56).dp)
+                }
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
