@@ -60,19 +60,20 @@ fun NoteCard(
                 .padding(12.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
-            Row() {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = note.title,
                     style = MaterialTheme.typography.h6,
                     fontWeight = FontWeight.Medium,
-                    modifier = Modifier
-                        .weight(8f)
                 )
 
                 Icon(
                     modifier = Modifier
                         .clip(CircleShape)
-                        .weight(1f)
                         .alpha(ContentAlpha.medium)
                         .rotate(rotationState)
                         .clickable {
@@ -86,7 +87,7 @@ fun NoteCard(
             Text(
                 modifier = Modifier
                     .padding(vertical = 8.dp),
-                text = if(note.description.isNotBlank()) note.description else "No description here..",
+                text = note.description.ifBlank { "No description here.." },
                 maxLines = if (expandedState) 4 else 1,
                 style = MaterialTheme.typography.subtitle1,
                 fontWeight = FontWeight.Normal,
