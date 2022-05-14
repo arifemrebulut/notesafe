@@ -11,6 +11,7 @@ import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.util.Utils.formatCategoryName
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -135,7 +136,7 @@ class AddEditNoteViewModel @Inject constructor(
     private fun addNewCategory(categoryName: String) {
         viewModelScope.launch {
             val category = Category(
-                name = categoryName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+                name = formatCategoryName(categoryName)
             )
             categoryRepository.addCategory(category)
         }

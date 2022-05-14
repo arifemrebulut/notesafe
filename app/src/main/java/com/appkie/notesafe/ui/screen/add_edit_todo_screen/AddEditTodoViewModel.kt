@@ -12,6 +12,7 @@ import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.util.Utils
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -134,7 +135,7 @@ class AddEditTodoViewModel @Inject constructor(
     private fun addNewCategory(categoryName: String) {
         viewModelScope.launch {
             val category = Category(
-                name = categoryName.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+                name = Utils.formatCategoryName(categoryName)
             )
             categoryRepository.addCategory(category)
         }

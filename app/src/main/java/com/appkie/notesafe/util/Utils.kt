@@ -44,6 +44,12 @@ object Utils {
         }
     }
 
+    fun formatCategoryName(categoryName: String) : String {
+        return categoryName
+            .lowercase()
+            .replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    }
+
     val noteColors = listOf(
         PastelYellow.toArgb(),
         PastelBlue.toArgb(),
