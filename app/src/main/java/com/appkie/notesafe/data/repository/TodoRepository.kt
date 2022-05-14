@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class TodoRepository @Inject constructor(
-    val todoDao: TodoDao
+    private val todoDao: TodoDao
 ) {
 
     fun getAllTodos(): Flow<List<Todo>> {

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(
-    val noteDao: NoteDao
+    private val noteDao: NoteDao
 ) {
 
     fun getAllNotes(): Flow<List<Note>> {
