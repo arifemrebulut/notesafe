@@ -67,7 +67,12 @@ fun TodoListScreen(
                                 )
                             )
                         },
-                        onTodoClicked = { navController.navigate(Screen.AddEditTodoScreen.route + "/${item.id}") }
+                        onTodoClicked = { navController.navigate(Screen.AddEditTodoScreen.route + "/${item.id}") },
+                        swipeToRevealAnimationDurationMs = 300,
+                        cardOffset = 300.dp,
+                        minDrag = 5,
+                        onShareClicked = {},
+                        onDeleteClicked = {}
                     )
                 }
             }

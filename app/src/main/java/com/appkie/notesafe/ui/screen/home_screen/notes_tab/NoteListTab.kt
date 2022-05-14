@@ -59,7 +59,12 @@ fun NoteListScreen(
                 items(noteList) { item ->
                     NoteCard(
                         note = item,
-                        onNoteClicked = { navController.navigate(Screen.AddEditNoteScreen.route + "/${item.id}") }
+                        onNoteClicked = { navController.navigate(Screen.AddEditNoteScreen.route + "/${item.id}") },
+                        swipeToRevealAnimationDurationMs = 300,
+                        minDrag = 5,
+                        cardOffset = 300.dp,
+                        onDeleteClicked = {},
+                        onShareClicked = {}
                     )
                 }
             }
