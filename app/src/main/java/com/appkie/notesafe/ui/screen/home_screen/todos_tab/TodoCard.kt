@@ -35,13 +35,14 @@ import kotlin.math.roundToInt
 @Composable
 fun TodoCard(
     todo: Todo,
+    modifier: Modifier,
     swipeToRevealAnimationDurationMs: Int,
     cardOffset: Dp,
     minDrag: Int = 5,
     onTodoClicked: (Int) -> Unit,
-    onShareClicked: (Int) -> Unit,
+    onShareClicked: () -> Unit,
     onDeleteClicked: (Todo) -> Unit,
-    onCheckedChange: (Boolean) -> Unit
+    onCheckedChange: (Boolean) -> Unit,
 ) {
     var expandedState by remember { mutableStateOf(false) }
     val rotationState by animateFloatAsState(
@@ -65,7 +66,7 @@ fun TodoCard(
 
     Box(
         contentAlignment = Alignment.CenterEnd,
-        modifier = Modifier
+        modifier = modifier
             .padding(bottom = 8.dp)
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.04f))
@@ -81,7 +82,7 @@ fun TodoCard(
             }
 
             IconButton(
-                onClick = { onShareClicked(todo.id!!) }
+                onClick = onShareClicked
             ) {
                 Icon(imageVector = Icons.Outlined.Share, contentDescription = "Share Note")
             }

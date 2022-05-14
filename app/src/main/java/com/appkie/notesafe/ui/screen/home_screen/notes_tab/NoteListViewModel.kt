@@ -10,6 +10,7 @@ import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
+import com.appkie.notesafe.util.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -60,7 +61,7 @@ class NoteListViewModel @Inject constructor(
                 searchNote(event.searchQuery)
             }
             is NoteListUiEvent.DeleteNote -> {
-
+                deleteNote(event.note)
             }
         }
     }
@@ -97,6 +98,12 @@ class NoteListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "searchNote: $e")
+        }
+    }
+
+    private fun deleteNote(note: Note) {
+        viewModelScope.launch {
+            noteRepository.deleteNote(note = note)
         }
     }
 

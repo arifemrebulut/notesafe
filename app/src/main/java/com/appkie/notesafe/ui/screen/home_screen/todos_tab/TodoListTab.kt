@@ -1,5 +1,7 @@
 package com.appkie.notesafe.ui.screen.home_screen.todos_tab
 
+import android.content.Intent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -8,18 +10,23 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.ExperimentalComposeApi
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.R
 import com.appkie.notesafe.ui.components.SortingSettingsBar
 import com.appkie.notesafe.ui.navigation.Screen
+import com.appkie.notesafe.util.Utils
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TodoListScreen(
     navController: NavController,
@@ -50,15 +57,19 @@ fun TodoListScreen(
         )
 
         if (todos.isNotEmpty()) {
+
+            val context = LocalContext.current
+
             LazyColumn(
                 contentPadding = PaddingValues(top = 1.dp, bottom = 52.dp)
             ) {
 
                 val todoList = if (searching) searchedTodos else todos
 
-                items(todoList) { item ->
+                items(items = todoList, key = { it.id.toString() }) { item ->
                     TodoCard(
                         todo = item,
+                        modifier = Modifier.animateItemPlacement(),
                         onCheckedChange = {
                             todoListViewModel.onEvent(
                                 TodoListUiEvent.CheckedChange(
@@ -71,8 +82,22 @@ fun TodoListScreen(
                         swipeToRevealAnimationDurationMs = 300,
                         cardOffset = 300.dp,
                         minDrag = 5,
-                        onShareClicked = {},
-                        onDeleteClicked = {}
+                        onShareClicked = {
+                            val textToShare = Utils.formatTextForShare(item)
+
+                            val sendIntent: Intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, textToShare)
+                                type = "text/plain"
+                            }
+
+                            val shareIntent = Intent.createChooser(sendIntent, null)
+
+                            startActivity(context , shareIntent, null)
+                        },
+                        onDeleteClicked = {
+                            todoListViewModel.onEvent(TodoListUiEvent.DeleteTodo(it))
+                        }
                     )
                 }
             }

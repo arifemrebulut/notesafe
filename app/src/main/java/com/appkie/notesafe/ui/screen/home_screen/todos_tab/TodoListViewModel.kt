@@ -58,7 +58,7 @@ class TodoListViewModel @Inject constructor(
                 searchTodo(event.searchQuery)
             }
             is TodoListUiEvent.DeleteTodo -> {
-
+                deleteTodo(event.todo)
             }
             is TodoListUiEvent.CheckedChange -> {
                 updateTodo(todo = event.todo, checked = event.checked)
@@ -111,6 +111,12 @@ class TodoListViewModel @Inject constructor(
             }
         } catch (e: Exception) {
             Log.d(TAG, "updateTodo: $e")
+        }
+    }
+
+    private fun deleteTodo(todo: Todo) {
+        viewModelScope.launch {
+            todoRepository.deleteTodo(todo)
         }
     }
 

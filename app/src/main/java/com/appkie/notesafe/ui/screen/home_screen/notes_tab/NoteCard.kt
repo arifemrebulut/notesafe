@@ -35,11 +35,12 @@ import kotlin.math.roundToInt
 @Composable
 fun NoteCard(
     note: Note,
+    modifier: Modifier,
     swipeToRevealAnimationDurationMs: Int,
     cardOffset: Dp,
     minDrag: Int = 5,
     onNoteClicked: (Int) -> Unit,
-    onShareClicked: (Int) -> Unit,
+    onShareClicked: () -> Unit,
     onDeleteClicked: (Note) -> Unit
 ) {
     var expandedState by remember { mutableStateOf(false) }
@@ -64,7 +65,7 @@ fun NoteCard(
 
     Box(
         contentAlignment = Alignment.CenterEnd,
-        modifier = Modifier
+        modifier = modifier
             .padding(bottom = 8.dp)
             .fillMaxSize()
             .background(Color.Black.copy(alpha = 0.04f))
@@ -80,7 +81,7 @@ fun NoteCard(
             }
 
             IconButton(
-                onClick = { onShareClicked(note.id!!) }
+                onClick = onShareClicked
             ) {
                 Icon(imageVector = Icons.Outlined.Share, contentDescription = "Share Note")
             }
