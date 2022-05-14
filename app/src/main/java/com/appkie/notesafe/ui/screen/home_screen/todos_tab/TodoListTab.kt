@@ -96,7 +96,7 @@ fun TodoListScreen(
                             startActivity(context , shareIntent, null)
                         },
                         onDeleteClicked = {
-                            todoListViewModel.onEvent(TodoListUiEvent.DeleteTodo(it))
+                            todoListViewModel.onEvent(TodoListUiEvent.DeleteTodo(it.id!!))
                         }
                     )
                 }

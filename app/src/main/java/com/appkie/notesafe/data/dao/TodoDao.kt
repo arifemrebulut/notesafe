@@ -19,6 +19,6 @@ interface TodoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveTodo(todo: Todo)
 
-    @Delete
-    suspend fun deleteTodo(todo: Todo)
+    @Query("DELETE FROM todo_table WHERE id = :todoId")
+    suspend fun deleteTodo(todoId: Int)
 }

@@ -7,6 +7,6 @@ sealed class TodoListUiEvent {
     data class ChangeCategory(val category: String) : TodoListUiEvent()
     data class OrderTodos(val orderType: OrderType) : TodoListUiEvent()
     data class SearchTodo(val searchQuery: String) : TodoListUiEvent()
-    data class DeleteTodo(val todo: Todo) : TodoListUiEvent()
+    data class DeleteTodo(val todoId: Int) : TodoListUiEvent()
     data class CheckedChange(val todo: Todo, val checked: Boolean) : TodoListUiEvent()
 }

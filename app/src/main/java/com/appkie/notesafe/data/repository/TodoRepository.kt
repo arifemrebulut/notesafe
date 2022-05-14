@@ -25,7 +25,7 @@ class TodoRepository @Inject constructor(
         todoDao.saveTodo(todo = todo)
     }
 
-    suspend fun deleteTodo(todo: Todo) {
-        todoDao.deleteTodo(todo = todo)
+    suspend fun deleteTodo(todoId: Int) {
+        todoDao.deleteTodo(todoId)
     }
 }

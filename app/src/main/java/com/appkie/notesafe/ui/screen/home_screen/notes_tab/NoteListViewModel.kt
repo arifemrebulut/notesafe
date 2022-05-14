@@ -61,7 +61,7 @@ class NoteListViewModel @Inject constructor(
                 searchNote(event.searchQuery)
             }
             is NoteListUiEvent.DeleteNote -> {
-                deleteNote(event.note)
+                deleteNote(event.noteId)
             }
         }
     }
@@ -101,9 +101,9 @@ class NoteListViewModel @Inject constructor(
         }
     }
 
-    private fun deleteNote(note: Note) {
+    private fun deleteNote(noteId: Int) {
         viewModelScope.launch {
-            noteRepository.deleteNote(note = note)
+            noteRepository.deleteNote(noteId)
         }
     }
 

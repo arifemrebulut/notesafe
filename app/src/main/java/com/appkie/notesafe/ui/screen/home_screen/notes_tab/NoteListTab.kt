@@ -75,7 +75,7 @@ fun NoteListScreen(
                         minDrag = 5,
                         cardOffset = 300.dp,
                         onDeleteClicked = {
-                            noteListViewModel.onEvent(NoteListUiEvent.DeleteNote(it))
+                            noteListViewModel.onEvent(NoteListUiEvent.DeleteNote(it.id!!))
                         },
                         onShareClicked = {
                             val textToShare = formatTextForShare(item)

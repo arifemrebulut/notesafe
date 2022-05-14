@@ -112,15 +112,7 @@ class AddEditTodoViewModel @Inject constructor(
 
     private fun deleteTodo() {
         viewModelScope.launch {
-            val todo = Todo(
-                id = _id.value,
-                title = _title.value,
-                checked = _checked.value,
-                category = _category.value,
-                creationTime = getFormattedTime(),
-                color = _color.value
-            )
-            todoRepository.deleteTodo(todo = todo)
+            todoRepository.deleteTodo(_id.value)
         }
     }
 

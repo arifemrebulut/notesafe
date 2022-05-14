@@ -113,15 +113,7 @@ class AddEditNoteViewModel @Inject constructor(
 
     private fun deleteNote() {
         viewModelScope.launch {
-            val note = Note(
-                id = _id.value,
-                title = _title.value,
-                description = _description.value,
-                category = _category.value,
-                creationTime = getFormattedTime(),
-                color = _color.value
-            )
-            noteRepository.deleteNote(note = note)
+            noteRepository.deleteNote(_id.value)
         }
     }
 
