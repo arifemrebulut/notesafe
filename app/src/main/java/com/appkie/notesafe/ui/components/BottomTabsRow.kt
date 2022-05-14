@@ -1,7 +1,6 @@
 package com.appkie.notesafe.ui.components
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.ContentAlpha
@@ -18,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.ui.theme.Blue
-import com.appkie.notesafe.ui.theme.White
 import com.appkie.notesafe.ui.theme.WhiteVariant
 
 @Composable

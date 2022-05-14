@@ -1,6 +1,5 @@
 package com.appkie.notesafe.ui.screen.add_edit_note_screen
 
-
 sealed class AddEditNoteUiEvent {
     object DeleteNote : AddEditNoteUiEvent()
     object SaveNote : AddEditNoteUiEvent()

@@ -20,7 +20,6 @@ import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.screen.add_edit_note_screen.AddEditNoteUiEvent
 import com.appkie.notesafe.ui.theme.PastelBlue
 import kotlinx.coroutines.launch
 

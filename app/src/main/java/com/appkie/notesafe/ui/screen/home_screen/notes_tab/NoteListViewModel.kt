@@ -10,7 +10,6 @@ import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.util.OrderType
-import com.appkie.notesafe.util.Utils
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
