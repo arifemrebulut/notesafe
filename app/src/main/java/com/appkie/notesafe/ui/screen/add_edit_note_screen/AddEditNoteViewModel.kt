@@ -11,6 +11,7 @@ import com.appkie.notesafe.data.model.Note
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.NoteRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.util.Consts.DEFAULT_CATEGORY_NAME
 import com.appkie.notesafe.util.Utils.formatCategoryName
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,7 @@ class AddEditNoteViewModel @Inject constructor(
     private val _description = mutableStateOf("")
     val description: State<String> = _description
 
-    private val _category = mutableStateOf("All")
+    private val _category = mutableStateOf(DEFAULT_CATEGORY_NAME)
     val category: State<String> = _category
 
     private val _categoryList = mutableStateOf<List<Category>>(emptyList())

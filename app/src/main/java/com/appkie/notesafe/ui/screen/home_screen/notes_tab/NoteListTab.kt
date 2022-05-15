@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -114,7 +115,7 @@ fun NoteListScreen(
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Text(
-                        text = "Create Your First Note!",
+                        text = stringResource(id = R.string.create_first_note_text),
                         style = MaterialTheme.typography.h5,
                         color = Color.Black.copy(alpha = ContentAlpha.medium)
                     )

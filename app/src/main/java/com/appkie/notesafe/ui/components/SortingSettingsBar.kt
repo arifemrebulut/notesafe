@@ -17,8 +17,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.appkie.notesafe.R
 import com.appkie.notesafe.data.model.Category
 import com.appkie.notesafe.ui.theme.Blue
 import com.appkie.notesafe.util.OrderType
@@ -122,7 +124,7 @@ fun SortingSettingsBar(
                             onSortingFilterChange(OrderType.NEWEST)
                         }
                     ) {
-                        Text(text = "Newest")
+                        Text(text = stringResource(id = R.string.sorting_newest_text))
                     }
                     DropdownMenuItem(
                         onClick = {
@@ -130,7 +132,7 @@ fun SortingSettingsBar(
                             onSortingFilterChange(OrderType.OLDEST)
                         }
                     ) {
-                        Text(text = "Oldest")
+                        Text(text = stringResource(id = R.string.sorting_oldest_text))
                     }
                 }
             }

@@ -18,8 +18,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.appkie.notesafe.R
 
 @Composable
 fun SearchTopBar(
@@ -59,7 +61,7 @@ fun SearchTopBar(
                     // Leading Icon
                     Icon(
                         imageVector = Icons.Outlined.Search,
-                        contentDescription = "Search Icon",
+                        contentDescription = null,
                         tint = Color.Black.copy(alpha = 0.5f),
                         modifier = Modifier
                             .padding(horizontal = 12.dp)
@@ -68,7 +70,7 @@ fun SearchTopBar(
 
                         // Placeholder Text
                         if (text.isEmpty()) Text(
-                            text = "Search your notes",
+                            text = stringResource(id = R.string.search_placeholder_text),
                             style = LocalTextStyle.current.copy(
                                 color = MaterialTheme.colors.onSurface.copy(alpha = 0.3f),
                                 fontSize = 14.sp
@@ -87,7 +89,7 @@ fun SearchTopBar(
                         ) {
                             Icon(
                                 imageVector = Icons.Outlined.Close,
-                                contentDescription = "Close Search",
+                                contentDescription = stringResource(id = R.string.search_close_icon_description),
                                 tint = Color.Black.copy(alpha = 0.5f),
                                 modifier = Modifier
                                     .padding(horizontal = 12.dp)

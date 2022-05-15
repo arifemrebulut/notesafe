@@ -15,9 +15,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.appkie.notesafe.ui.theme.Blue
 import com.appkie.notesafe.ui.theme.WhiteVariant
+import com.appkie.notesafe.R
 
 @Composable
 fun BottomTabsRow(
@@ -26,11 +28,11 @@ fun BottomTabsRow(
 ) {
     val tabs = listOf(
         BottomTabItem(
-            label = "Notes",
+            label = stringResource(id = R.string.bottom_tabs_row_notes_label),
             icon = Icons.Outlined.Description
         ),
         BottomTabItem(
-            label = "Todos",
+            label = stringResource(id = R.string.bottom_tabs_row_todos_label),
             icon = Icons.Outlined.Checklist
         )
     )

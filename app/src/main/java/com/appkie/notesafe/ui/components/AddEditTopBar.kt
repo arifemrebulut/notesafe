@@ -11,7 +11,9 @@ import androidx.compose.material.icons.outlined.Share
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.appkie.notesafe.R
 
 @Composable
 fun AddEditTopBar(
@@ -31,7 +33,7 @@ fun AddEditTopBar(
         ) {
             Icon(
                 imageVector = Icons.Outlined.ArrowBackIosNew,
-                contentDescription = "Go Back Button"
+                contentDescription = stringResource(id = R.string.top_bar_go_back_button_icon_description)
             )
         }
 
@@ -47,7 +49,7 @@ fun AddEditTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Delete,
-                    contentDescription = "Delete"
+                    contentDescription = stringResource(id = R.string.delete_text)
                 )
             }
             IconButton(
@@ -55,7 +57,7 @@ fun AddEditTopBar(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Share,
-                    contentDescription = "Share"
+                    contentDescription = stringResource(id = R.string.share_text)
                 )
             }
             IconButton(
@@ -64,7 +66,7 @@ fun AddEditTopBar(
                 Icon(
                     imageVector = Icons.Outlined.Done,
                     modifier = Modifier.size(30.dp),
-                    contentDescription = "Save"
+                    contentDescription = stringResource(id = R.string.top_bar_save_button_icon_description)
                 )
             }
         }

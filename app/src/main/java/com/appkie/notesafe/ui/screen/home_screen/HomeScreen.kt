@@ -7,6 +7,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Add
 import androidx.compose.runtime.*
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.appkie.notesafe.ui.components.BottomTabsRow
@@ -18,6 +19,7 @@ import com.appkie.notesafe.ui.screen.home_screen.notes_tab.NoteListViewModel
 import com.appkie.notesafe.ui.screen.home_screen.todos_tab.TodoListScreen
 import com.appkie.notesafe.ui.screen.home_screen.todos_tab.TodoListUiEvent
 import com.appkie.notesafe.ui.screen.home_screen.todos_tab.TodoListViewModel
+import com.appkie.notesafe.R
 
 @Composable
 fun HomeScreen(
@@ -60,7 +62,7 @@ fun HomeScreen(
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Add,
-                    contentDescription = "New Note"
+                    contentDescription = stringResource(id = R.string.new_note_icon_description)
                 )
             }
         },

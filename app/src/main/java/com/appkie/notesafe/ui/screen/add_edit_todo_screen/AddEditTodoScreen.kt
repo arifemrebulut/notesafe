@@ -11,16 +11,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.appkie.notesafe.R
 import com.appkie.notesafe.ui.components.AddCategoryDialog
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
 import com.appkie.notesafe.ui.components.CustomDialogBox
 import com.appkie.notesafe.ui.navigation.Screen
-import com.appkie.notesafe.ui.theme.PastelBlue
 import kotlinx.coroutines.launch
 
 @Composable
@@ -72,7 +72,7 @@ fun AddEditTodoScreen(
                     } else {
                         coroutineScope.launch {
                             scaffoldState.snackbarHostState.showSnackbar(
-                                message = "Todo cannot be empty!",
+                                message = R.string.empty_todo_snackbar_text.toString(),
                                 duration = SnackbarDuration.Short
                             )
                         }
@@ -86,10 +86,10 @@ fun AddEditTodoScreen(
     ) {
         if (showDeleteDialog) {
             CustomDialogBox(
-                dialogText = "Are you sure you want to delete this todo?",
-                leftButtonText = "Cancel",
+                dialogText = stringResource(id = R.string.delete_todo_dialog_text),
+                leftButtonText = stringResource(id = R.string.cancel_text),
                 onLeftButtonClicked = { showDeleteDialog = false },
-                rightButtonText = "Delete",
+                rightButtonText = stringResource(id = R.string.delete_text),
                 onRightButtonClicked = {
                     showDeleteDialog = false
 
@@ -177,7 +177,7 @@ fun TodoContent(
                 .fillMaxWidth(),
             placeholder = {
                 Text(
-                    text = "Todo...",
+                    text = stringResource(id = R.string.todo_title_placeholder),
                     style = MaterialTheme.typography.h6
                 )
             },
@@ -189,16 +189,4 @@ fun TodoContent(
             textStyle = MaterialTheme.typography.h6
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TodoContentPreview() {
-    TodoContent(
-            titleState = "Title",
-        onTitleChange = {
-
-        },
-        backgroundColor = PastelBlue
-    )
 }

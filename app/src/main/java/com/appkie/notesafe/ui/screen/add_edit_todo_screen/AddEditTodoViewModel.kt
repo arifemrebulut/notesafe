@@ -11,6 +11,7 @@ import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.data.repository.CategoryRepository
 import com.appkie.notesafe.data.repository.TodoRepository
 import com.appkie.notesafe.ui.theme.PastelBlue
+import com.appkie.notesafe.util.Consts.DEFAULT_CATEGORY_NAME
 import com.appkie.notesafe.util.Utils
 import com.appkie.notesafe.util.Utils.getFormattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,7 @@ class AddEditTodoViewModel @Inject constructor(
     private val _title = mutableStateOf("")
     val title: State<String> = _title
 
-    private val _category = mutableStateOf("All")
+    private val _category = mutableStateOf(DEFAULT_CATEGORY_NAME)
     val category: State<String> = _category
 
     private val _categoryList = mutableStateOf<List<Category>>(emptyList())

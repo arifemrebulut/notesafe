@@ -11,9 +11,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.appkie.notesafe.R
 import com.appkie.notesafe.ui.components.AddCategoryDialog
 import com.appkie.notesafe.ui.components.AddEditSettingsSection
 import com.appkie.notesafe.ui.components.AddEditTopBar
@@ -71,7 +73,7 @@ fun AddEditNoteScreen(
                     } else {
                         coroutineScope.launch {
                             scaffoldState.snackbarHostState.showSnackbar(
-                                message = "Title cannot be empty!",
+                                message = R.string.empty_title_snackbar_text.toString(),
                                 duration = SnackbarDuration.Short
                             )
                         }
@@ -85,10 +87,10 @@ fun AddEditNoteScreen(
     ) {
         if (showDeleteDialog) {
             CustomDialogBox(
-                dialogText = "Are you sure you want to delete this note?",
-                leftButtonText = "Cancel",
+                dialogText = stringResource(id = R.string.delete_note_dialog_text),
+                leftButtonText = stringResource(id = R.string.cancel_text),
                 onLeftButtonClicked = { showDeleteDialog = false },
-                rightButtonText = "Delete",
+                rightButtonText = stringResource(id = R.string.delete_text),
                 onRightButtonClicked = {
                     showDeleteDialog = false
 
@@ -181,7 +183,7 @@ fun NoteContent(
                 .fillMaxWidth(),
             placeholder = {
                 Text(
-                    text = "Title",
+                    text = stringResource(id = R.string.note_title_placeholder),
                     style = MaterialTheme.typography.h6
                 )
             },
@@ -201,7 +203,7 @@ fun NoteContent(
             modifier = Modifier
                 .fillMaxSize(),
             placeholder = {
-                Text(text = "Note description starts here")
+                Text(text = stringResource(id = R.string.note_description_placeholder))
             },
             colors = TextFieldDefaults.textFieldColors(
                 backgroundColor = backgroundColor,

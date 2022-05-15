@@ -21,11 +21,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.appkie.notesafe.R
 import com.appkie.notesafe.data.model.Todo
 import com.appkie.notesafe.ui.theme.Black
 import com.appkie.notesafe.ui.theme.Shapes
@@ -78,13 +80,13 @@ fun TodoCard(
             IconButton(
                 onClick = { onDeleteClicked(todo) }
             ) {
-                Icon(imageVector = Icons.Outlined.Delete, contentDescription = "Delete Note")
+                Icon(imageVector = Icons.Outlined.Delete, contentDescription = stringResource(id = R.string.delete_text))
             }
 
             IconButton(
                 onClick = onShareClicked
             ) {
-                Icon(imageVector = Icons.Outlined.Share, contentDescription = "Share Note")
+                Icon(imageVector = Icons.Outlined.Share, contentDescription = stringResource(id = R.string.share_text))
             }
         }
 
@@ -155,7 +157,7 @@ fun TodoCard(
                                     expandedState = !expandedState
                                 },
                             imageVector = Icons.Outlined.ExpandMore,
-                            contentDescription = "Read More Arrow"
+                            contentDescription = stringResource(id = R.string.read_more_arrow_text)
                         )
                     }
 

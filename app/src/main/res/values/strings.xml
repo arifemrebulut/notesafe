@@ -1,3 +1,66 @@
 <resources>
     <string name="app_name">Notesafe</string>
+
+<!--  Common  -->
+    <string name="delete_text">Delete</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="share_text">Share</string>
+    <string name="read_more_arrow_text">Read More</string>
+
+<!--  Composable Components  -->
+
+    <!--  AddCategoryDialog  -->
+    <string name="dialog_title">Add New Category</string>
+    <string name="dialog_placeholder">Category Name</string>
+    <string name="dialog_add_button_text">Add</string>
+
+    <!--  AddEditSettingSection  -->
+    <string name="add_new_category_icon_description">Add New Category</string>
+    <string name="add_new_category_button">New</string>
+
+    <!--  AddEditTopBar  -->
+    <string name="top_bar_go_back_button_icon_description">Go Back</string>
+    <string name="top_bar_save_button_icon_description">Save</string>
+
+    <!--  BottomTabsRow  -->
+    <string name="bottom_tabs_row_notes_label">Notes</string>
+    <string name="bottom_tabs_row_todos_label">Todos</string>
+
+    <!--  SearchTopBar  -->
+    <string name="search_placeholder_text">Search your notes</string>
+    <string name="search_close_icon_description">Close Search</string>
+
+    <!--  SortingSettingsBar  -->
+    <string name="sorting_newest_text">Newest</string>
+    <string name="sorting_oldest_text">Oldest</string>
+
+<!--  Screens  -->
+
+    <!--  AddEditNoteScreen  -->
+    <string name="empty_title_snackbar_text">Title cannot be empty!</string>
+    <string name="delete_note_dialog_text">Are you sure you want to delete this note?</string>
+    <string name="note_title_placeholder">Share</string>
+    <string name="note_description_placeholder">Save</string>
+
+    <!--  AddEditTodoScreen  -->
+    <string name="empty_todo_snackbar_text">Todo cannot be empty!</string>
+    <string name="delete_todo_dialog_text">Are you sure you want to delete this todo?</string>
+    <string name="todo_title_placeholder">Todo…</string>
+
+    <!--  Home Screen  -->
+    <string name="new_note_icon_description">Create New Note</string>
+
+        <!--  NotesTab  -->
+
+            <!--  NoteCard  -->
+            <string name="no_description_text">No description here</string>
+
+            <!--  NotesListTab  -->
+            <string name="create_first_note_text">Create Your First Note!</string>
+
+        <!--  TodosTab  -->
+
+            <!--  TodoListTab  -->
+            <string name="create_first_todo_text">Create Your First Todo!</string>
+
 </resources>
